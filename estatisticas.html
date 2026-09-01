@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Estatísticas - Acervo</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f9fa;
+            color: #092d3d;
+        }
+
+
+        .app {
+            max-width: 430px;
+            margin: auto;
+            min-height: 100vh;
+            padding-bottom: 100px;
+        }
+
+
+        /* TOPO */
+
+        .topo {
+            padding: 25px 20px 20px;
+        }
+
+
+        .topo h1 {
+            font-size: 25px;
+            margin-bottom: 5px;
+        }
+
+
+        .topo p {
+            color: #71808a;
+            font-size: 12px;
+        }
+
+
+        /* RESUMO */
+
+        .resumo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 0 20px 18px;
+        }
+
+
+        .card-resumo {
+            background: white;
+            border: 1px solid #dce4e8;
+            border-radius: 17px;
+            padding: 16px;
+        }
+
+
+        .icone-card {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+
+        .numero {
+            display: block;
+            font-size: 25px;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+
+        .texto-card {
+            color: #71808a;
+            font-size: 10px;
+        }
+
+
+        /* SEÇÃO */
+
+        .titulo-secao {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 22px 20px 10px;
+        }
+
+
+        /* TIPOS */
+
+        .tipos {
+            margin: 0 20px;
+        }
+
+
+        .tipo {
+            background: white;
+            border: 1px solid #dce4e8;
+            border-radius: 15px;
+            padding: 13px;
+            margin-bottom: 9px;
+        }
+
+
+        .tipo-topo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+
+        .tipo-nome {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+
+        .tipo-total {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+
+        .barra {
+            width: 100%;
+            height: 8px;
+            background: #edf1f2;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+
+        .barra-preenchida {
+            height: 100%;
+            width: 0%;
+            background: #0b4353;
+            border-radius: 10px;
+            transition: width 0.5s;
+        }
+
+
+        /* STATUS */
+
+        .status-card {
+            margin: 0 20px;
+            background: white;
+            border: 1px solid #dce4e8;
+            border-radius: 17px;
+            padding: 16px;
+        }
+
+
+        .status-linha {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 0;
+            border-bottom: 1px solid #edf1f2;
+        }
+
+
+        .status-linha:last-child {
+            border-bottom: none;
+        }
+
+
+        .status-nome {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+
+
+        .bolinha {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #0b4353;
+        }
+
+
+        .bolinha.amarela {
+            background: #eca72c;
+        }
+
+
+        .bolinha.cinza {
+            background: #b9c3c7;
+        }
+
+
+        .status-numero {
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+
+        /* AVALIAÇÃO */
+
+        .avaliacao-card {
+            margin: 0 20px;
+            background: white;
+            border: 1px solid #dce4e8;
+            border-radius: 17px;
+            padding: 18px;
+            text-align: center;
+        }
+
+
+        .nota-grande {
+            font-size: 38px;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+
+        .estrelas {
+            color: #eca72c;
+            font-size: 22px;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+        }
+
+
+        .avaliacao-texto {
+            color: #71808a;
+            font-size: 10px;
+        }
+
+
+        /* VAZIO */
+
+        .vazio {
+            text-align: center;
+            padding: 30px 20px;
+            color: #71808a;
+        }
+
+
+        .vazio span {
+            display: block;
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+
+        .vazio p {
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+
+        /* NAVEGAÇÃO */
+
+        .navegacao {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            background: white;
+            border-top: 1px solid #dce4e8;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            padding: 9px 5px 8px;
+            z-index: 100;
+        }
+
+
+        .nav-item {
+            border: none;
+            background: transparent;
+            color: #71808a;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+
+        .nav-item span {
+            font-size: 20px;
+        }
+
+
+        .nav-item small {
+            font-size: 9px;
+        }
+
+
+        .nav-item.ativo {
+            color: #0b4353;
+            font-weight: bold;
+        }
+
+
+        .nav-item.adicionar span {
+            width: 42px;
+            height: 42px;
+            margin-top: -25px;
+            border-radius: 50%;
+            background: #0b4353;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+
+        .nav-item.adicionar small {
+            margin-top: 2px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- TOPO -->
+
+    <header class="topo">
+
+        <h1>
+            Estatísticas
+        </h1>
+
+        <p>
+            Veja como está o seu Acervo 📊
+        </p>
+
+    </header>
+
+
+    <!-- RESUMO -->
+
+    <div
+        class="resumo"
+        id="resumo"
+    >
+
+        <div class="card-resumo">
+
+            <div class="icone-card">
+                📚
+            </div>
+
+            <span
+                class="numero"
+                id="total"
+            >
+                0
+            </span>
+
+            <span class="texto-card">
+                Itens no Acervo
+            </span>
+
+        </div>
+
+
+        <div class="card-resumo">
+
+            <div class="icone-card">
+                ❤️
+            </div>
+
+            <span
+                class="numero"
+                id="favoritos"
+            >
+                0
+            </span>
+
+            <span class="texto-card">
+                Favoritos
+            </span>
+
+        </div>
+
+
+        <div class="card-resumo">
+
+            <div class="icone-card">
+                ✅
+            </div>
+
+            <span
+                class="numero"
+                id="concluidos"
+            >
+                0
+            </span>
+
+            <span class="texto-card">
+                Concluídos
+            </span>
+
+        </div>
+
+
+        <div class="card-resumo">
+
+            <div class="icone-card">
+                ⭐
+            </div>
+
+            <span
+                class="numero"
+                id="media"
+            >
+                —
+            </span>
+
+            <span class="texto-card">
+                Média das avaliações
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- TIPOS -->
+
+    <div class="titulo-secao">
+        Meu Acervo
+    </div>
+
+
+    <div class="tipos">
+
+
+        <!-- LIVROS -->
+
+        <div class="tipo">
+
+            <div class="tipo-topo">
+
+                <span class="tipo-nome">
+                    📖 Livros
+                </span>
+
+                <span
+                    class="tipo-total"
+                    id="livros"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <div class="barra">
+
+                <div
+                    class="barra-preenchida"
+                    id="barraLivros"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FILMES -->
+
+        <div class="tipo">
+
+            <div class="tipo-topo">
+
+                <span class="tipo-nome">
+                    🎬 Filmes
+                </span>
+
+                <span
+                    class="tipo-total"
+                    id="filmes"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <div class="barra">
+
+                <div
+                    class="barra-preenchida"
+                    id="barraFilmes"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SÉRIES -->
+
+        <div class="tipo">
+
+            <div class="tipo-topo">
+
+                <span class="tipo-nome">
+                    📺 Séries
+                </span>
+
+                <span
+                    class="tipo-total"
+                    id="series"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <div class="barra">
+
+                <div
+                    class="barra-preenchida"
+                    id="barraSeries"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- STATUS -->
+
+    <div class="titulo-secao">
+        Status
+    </div>
+
+
+    <div class="status-card">
+
+
+        <div class="status-linha">
+
+            <div class="status-nome">
+
+                <span class="bolinha"></span>
+
+                Concluídos
+
+            </div>
+
+            <span
+                class="status-numero"
+                id="statusConcluido"
+            >
+                0
+            </span>
+
+        </div>
+
+
+        <div class="status-linha">
+
+            <div class="status-nome">
+
+                <span class="bolinha amarela"></span>
+
+                Em andamento
+
+            </div>
+
+            <span
+                class="status-numero"
+                id="statusAndamento"
+            >
+                0
+            </span>
+
+        </div>
+
+
+        <div class="status-linha">
+
+            <div class="status-nome">
+
+                <span class="bolinha cinza"></span>
+
+                Quero ver
+
+            </div>
+
+            <span
+                class="status-numero"
+                id="statusQuero"
+            >
+                0
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- AVALIAÇÃO -->
+
+    <div class="titulo-secao">
+        Avaliações
+    </div>
+
+
+    <div class="avaliacao-card">
+
+
+        <div
+            class="nota-grande"
+            id="notaGrande"
+        >
+            —
+        </div>
+
+
+        <div
+            class="estrelas"
+            id="estrelasMedia"
+        >
+            ☆☆☆☆☆
+        </div>
+
+
+        <div class="avaliacao-texto">
+            Média das avaliações dos itens
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- NAVEGAÇÃO -->
+
+<nav class="navegacao">
+
+
+    <button
+        class="nav-item"
+        onclick="location.href='index.html'"
+    >
+
+        <span>
+            ⌂
+        </span>
+
+        <small>
+            Início
+        </small>
+
+    </button>
+
+
+    <button
+        class="nav-item"
+        onclick="location.href='biblioteca.html'"
+    >
+
+        <span>
+            📚
+        </span>
+
+        <small>
+            Biblioteca
+        </small>
+
+    </button>
+
+
+    <button
+        class="nav-item adicionar"
+        onclick="location.href='novo.html'"
+    >
+
+        <span>
+            +
+        </span>
+
+        <small>
+            Adicionar
+        </small>
+
+    </button>
+
+
+    <button
+        class="nav-item ativo"
+    >
+
+        <span>
+            📊
+        </span>
+
+        <small>
+            Estatísticas
+        </small>
+
+    </button>
+
+
+    <button
+        class="nav-item"
+        onclick="location.href='perfil.html'"
+    >
+
+        <span>
+            👤
+        </span>
+
+        <small>
+            Perfil
+        </small>
+
+    </button>
+
+
+</nav>
+
+
+<script>
+
+
+/* PEGAR ACERVO */
+
+const acervo =
+    JSON.parse(
+        localStorage.getItem(
+            "acervo"
+        )
+    ) || [];
+
+
+/* CONTADORES */
+
+let livros = 0;
+
+let filmes = 0;
+
+let series = 0;
+
+let favoritos = 0;
+
+let concluidos = 0;
+
+let andamento = 0;
+
+let quero = 0;
+
+let somaNotas = 0;
+
+let itensComNota = 0;
+
+
+/* ANALISAR ITENS */
+
+acervo.forEach(function(item) {
+
+
+    /* TIPOS */
+
+    if (item.tipo === "Livro") {
+
+        livros++;
+
+    }
+
+
+    if (item.tipo === "Filme") {
+
+        filmes++;
+
+    }
+
+
+    if (item.tipo === "Série") {
+
+        series++;
+
+    }
+
+
+    /* FAVORITOS */
+
+    if (item.favorito === true) {
+
+        favoritos++;
+
+    }
+
+
+    /* STATUS */
+
+    if (item.status === "concluido") {
+
+        concluidos++;
+
+    }
+
+
+    else if (
+        item.status === "andamento"
+    ) {
+
+        andamento++;
+
+    }
+
+
+    else {
+
+        quero++;
+
+    }
+
+
+    /* AVALIAÇÃO */
+
+    const nota =
+        Number(item.nota) || 0;
+
+
+    if (nota > 0) {
+
+        somaNotas += nota;
+
+        itensComNota++;
+
+    }
+
+});
+
+
+/* TOTAL */
+
+const total =
+    acervo.length;
+
+
+/* MÉDIA */
+
+let media = 0;
+
+
+if (itensComNota > 0) {
+
+    media =
+        somaNotas /
+        itensComNota;
+
+}
+
+
+/* COLOCAR NA TELA */
+
+document.getElementById(
+    "total"
+).textContent =
+    total;
+
+
+document.getElementById(
+    "favoritos"
+).textContent =
+    favoritos;
+
+
+document.getElementById(
+    "concluidos"
+).textContent =
+    concluidos;
+
+
+if (itensComNota > 0) {
+
+    document.getElementById(
+        "media"
+    ).textContent =
+        media.toFixed(1);
+
+    document.getElementById(
+        "notaGrande"
+    ).textContent =
+        media.toFixed(1);
+
+} else {
+
+    document.getElementById(
+        "media"
+    ).textContent =
+        "—";
+
+}
+
+
+/* TIPOS */
+
+document.getElementById(
+    "livros"
+).textContent =
+    livros;
+
+
+document.getElementById(
+    "filmes"
+).textContent =
+    filmes;
+
+
+document.getElementById(
+    "series"
+).textContent =
+    series;
+
+
+/* BARRAS */
+
+if (total > 0) {
+
+
+    document.getElementById(
+        "barraLivros"
+    ).style.width =
+        (livros / total * 100) + "%";
+
+
+    document.getElementById(
+        "barraFilmes"
+    ).style.width =
+        (filmes / total * 100) + "%";
+
+
+    document.getElementById(
+        "barraSeries"
+    ).style.width =
+        (series / total * 100) + "%";
+
+}
+
+
+/* STATUS */
+
+document.getElementById(
+    "statusConcluido"
+).textContent =
+    concluidos;
+
+
+document.getElementById(
+    "statusAndamento"
+).textContent =
+    andamento;
+
+
+document.getElementById(
+    "statusQuero"
+).textContent =
+    quero;
+
+
+/* ESTRELAS DA MÉDIA */
+
+const estrelasMedia =
+    document.getElementById(
+        "estrelasMedia"
+    );
+
+
+if (itensComNota > 0) {
+
+
+    const arredondada =
+        Math.round(media);
+
+
+    estrelasMedia.textContent =
+
+        "★".repeat(
+            arredondada
+        ) +
+
+        "☆".repeat(
+            5 - arredondada
+        );
+
+
+} else {
+
+    estrelasMedia.textContent =
+        "☆☆☆☆☆";
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
