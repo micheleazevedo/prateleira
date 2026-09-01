@@ -1,796 +1,694 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 
 <head>
 
-    <meta charset="UTF-8">
+```
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <title>Biblioteca - Prateleira</title>
+<title>Biblioteca - Prateleira</title>
 
+<style>
 
-    <style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f7f9fa;
+        color: #092d3d;
+        transition: 0.2s;
+    }
 
+    .app {
+        max-width: 430px;
+        margin: auto;
+        min-height: 100vh;
+        padding-bottom: 90px;
+    }
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f7f9fa;
-            color: #092d3d;
-            transition: 0.2s;
-        }
+    /* =========================
+       TOPO
+    ========================= */
 
+    .topo {
+        padding: 25px 20px 15px;
+    }
 
-        .app {
-            max-width: 430px;
-            margin: auto;
-            min-height: 100vh;
-            padding-bottom: 90px;
-        }
+    .topo-linha {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+    }
 
+    .topo h1 {
+        font-size: 25px;
+    }
 
-        /* =========================
-           TOPO
-        ========================= */
+    .contador {
+        color: #71808a;
+        font-size: 11px;
+        margin-top: 4px;
+    }
 
-        .topo {
-            padding: 25px 20px 15px;
-        }
+    .botao-adicionar {
+        width: 40px;
+        height: 40px;
+        border: none;
+        border-radius: 50%;
+        background: #0b4353;
+        color: white;
+        font-size: 23px;
+        cursor: pointer;
+    }
 
+    /* =========================
+       BUSCA
+    ========================= */
 
-        .topo-linha {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-        }
+    .busca {
+        position: relative;
+    }
 
+    .busca input {
+        width: 100%;
+        border: 1px solid #dce4e8;
+        background: white;
+        border-radius: 15px;
+        padding: 13px 14px 13px 40px;
+        font-size: 12px;
+        color: #092d3d;
+        outline: none;
+    }
 
-        .topo h1 {
-            font-size: 25px;
-        }
+    .busca input:focus {
+        border-color: #0b4353;
+    }
 
+    .icone-busca {
+        position: absolute;
+        left: 14px;
+        top: 12px;
+        font-size: 15px;
+        color: #71808a;
+    }
 
-        .contador {
-            color: #71808a;
-            font-size: 11px;
-            margin-top: 4px;
-        }
+    /* =========================
+       FILTROS
+    ========================= */
 
+    .filtros {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding: 3px 20px 5px;
+        margin-bottom: 12px;
+    }
 
-        .botao-adicionar {
-            width: 40px;
-            height: 40px;
-            border: none;
-            border-radius: 50%;
-            background: #0b4353;
-            color: white;
-            font-size: 23px;
-            cursor: pointer;
-        }
+    .filtros::-webkit-scrollbar {
+        display: none;
+    }
 
+    .filtro {
+        flex-shrink: 0;
+        border: 1px solid #dce4e8;
+        background: white;
+        color: #71808a;
+        border-radius: 20px;
+        padding: 9px 14px;
+        font-size: 10px;
+        cursor: pointer;
+    }
 
-        /* =========================
-           BUSCA
-        ========================= */
+    .filtro.ativo {
+        background: #0b4353;
+        color: white;
+        border-color: #0b4353;
+    }
 
-        .busca {
-            position: relative;
-        }
+    /* =========================
+       ORGANIZAÇÃO
+    ========================= */
 
+    .barra-organizacao {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px 15px;
+    }
 
-        .busca input {
-            width: 100%;
-            border: 1px solid #dce4e8;
-            background: white;
-            border-radius: 15px;
-            padding: 13px 14px 13px 40px;
-            font-size: 12px;
-            color: #092d3d;
-            outline: none;
-        }
+    .resultado {
+        color: #71808a;
+        font-size: 10px;
+    }
 
+    .ordenacao {
+        border: none;
+        background: transparent;
+        color: #0b4353;
+        font-size: 10px;
+        outline: none;
+        cursor: pointer;
+    }
 
-        .busca input:focus {
-            border-color: #0b4353;
-        }
+    /* =========================
+       GRID
+    ========================= */
 
+    .lista {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        padding: 0 20px;
+    }
 
-        .icone-busca {
-            position: absolute;
-            left: 14px;
-            top: 12px;
-            font-size: 15px;
-            color: #71808a;
-        }
+    /* =========================
+       CARD
+    ========================= */
 
+    .card {
+        background: white;
+        border: 1px solid #dce4e8;
+        border-radius: 17px;
+        overflow: hidden;
+        cursor: pointer;
+        position: relative;
+        transition: 0.15s;
+    }
 
-        /* =========================
-           FILTROS
-        ========================= */
+    .card:active {
+        transform: scale(0.98);
+    }
 
-        .filtros {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding: 3px 20px 5px;
-            margin-bottom: 12px;
-        }
+    .capa {
+        width: 100%;
+        height: 210px;
+        background: #e8f2f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+        overflow: hidden;
+    }
 
+    .capa img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 
-        .filtros::-webkit-scrollbar {
-            display: none;
-        }
+    .favorito {
+        position: absolute;
+        right: 8px;
+        top: 8px;
+        width: 29px;
+        height: 29px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(255,255,255,0.92);
+        font-size: 15px;
+        cursor: pointer;
+        z-index: 2;
+    }
 
+    .informacoes {
+        padding: 11px;
+    }
 
-        .filtro {
-            flex-shrink: 0;
-            border: 1px solid #dce4e8;
-            background: white;
-            color: #71808a;
-            border-radius: 20px;
-            padding: 9px 14px;
-            font-size: 10px;
-            cursor: pointer;
-        }
+    .tipo-card {
+        color: #71808a;
+        font-size: 8px;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+    }
 
+    .titulo-card {
+        font-size: 12px;
+        font-weight: bold;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 5px;
+    }
 
-        .filtro.ativo {
-            background: #0b4353;
-            color: white;
-            border-color: #0b4353;
-        }
+    .autor-card {
+        color: #71808a;
+        font-size: 9px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 7px;
+    }
 
+    .rodape-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-        /* =========================
-           ORGANIZAÇÃO
-        ========================= */
+    .estrelas {
+        color: #eca72c;
+        font-size: 10px;
+        letter-spacing: 0;
+    }
 
-        .barra-organizacao {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px 15px;
-        }
+    .status {
+        font-size: 8px;
+        padding: 4px 6px;
+        border-radius: 8px;
+        background: #eef3f4;
+        color: #52707a;
+    }
 
+    /* =========================
+       VAZIO
+    ========================= */
 
-        .resultado {
-            color: #71808a;
-            font-size: 10px;
-        }
+    .vazio {
+        display: none;
+        margin: 25px 20px;
+        background: white;
+        border: 1px solid #dce4e8;
+        border-radius: 18px;
+        padding: 35px 20px;
+        text-align: center;
+    }
 
+    .vazio-icone {
+        font-size: 45px;
+        margin-bottom: 10px;
+    }
 
-        .ordenacao {
-            border: none;
-            background: transparent;
-            color: #0b4353;
-            font-size: 10px;
-            outline: none;
-            cursor: pointer;
-        }
+    .vazio strong {
+        display: block;
+        font-size: 14px;
+        margin-bottom: 7px;
+    }
 
+    .vazio p {
+        color: #71808a;
+        font-size: 10px;
+        line-height: 1.5;
+        margin-bottom: 15px;
+    }
 
-        /* =========================
-           GRID
-        ========================= */
+    .vazio button {
+        border: none;
+        background: #0b4353;
+        color: white;
+        border-radius: 12px;
+        padding: 11px 17px;
+        font-size: 11px;
+        cursor: pointer;
+    }
+
+    /* =========================
+       MENU INFERIOR
+    ========================= */
+
+    .menu {
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(430px, 100%);
+        height: 70px;
+        background: white;
+        border-top: 1px solid #dce4e8;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        z-index: 10;
+    }
+
+    .menu button {
+        border: none;
+        background: transparent;
+        color: #71808a;
+        font-size: 9px;
+        cursor: pointer;
+    }
+
+    .menu button span {
+        display: block;
+        font-size: 19px;
+        margin-bottom: 4px;
+    }
+
+    .menu button.ativo {
+        color: #0b4353;
+        font-weight: bold;
+    }
+
+    /* =========================
+       MODO ESCURO
+    ========================= */
+
+    body.modo-escuro {
+        background: #10191d;
+        color: #edf4f5;
+    }
+
+    body.modo-escuro .contador,
+    body.modo-escuro .resultado,
+    body.modo-escuro .tipo-card,
+    body.modo-escuro .autor-card {
+        color: #9eafb5;
+    }
+
+    body.modo-escuro .busca input {
+        background: #18252a;
+        border-color: #2b3b40;
+        color: #edf4f5;
+    }
+
+    body.modo-escuro .busca input::placeholder {
+        color: #8d9da2;
+    }
+
+    body.modo-escuro .filtro {
+        background: #18252a;
+        border-color: #2b3b40;
+        color: #aab8bd;
+    }
+
+    body.modo-escuro .filtro.ativo {
+        background: #0b4353;
+        color: white;
+        border-color: #0b4353;
+    }
+
+    body.modo-escuro .ordenacao {
+        color: #7fb1c0;
+    }
+
+    body.modo-escuro .card {
+        background: #18252a;
+        border-color: #2b3b40;
+    }
+
+    body.modo-escuro .capa {
+        background: #223238;
+    }
+
+    body.modo-escuro .status {
+        background: #26363b;
+        color: #aab8bd;
+    }
+
+    body.modo-escuro .vazio {
+        background: #18252a;
+        border-color: #2b3b40;
+    }
+
+    body.modo-escuro .vazio p {
+        color: #9eafb5;
+    }
+
+    body.modo-escuro .menu {
+        background: #151f23;
+        border-top-color: #2b3b40;
+    }
+
+    body.modo-escuro .menu button {
+        color: #9eafb5;
+    }
+
+    body.modo-escuro .menu button.ativo {
+        color: #7fb1c0;
+    }
+
+    /* =========================
+       RESPONSIVO
+    ========================= */
+
+    @media (max-width: 350px) {
 
         .lista {
-            display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            padding: 0 20px;
+            gap: 8px;
         }
-
-
-        /* =========================
-           CARD
-        ========================= */
-
-        .card {
-            background: white;
-            border: 1px solid #dce4e8;
-            border-radius: 17px;
-            overflow: hidden;
-            cursor: pointer;
-            position: relative;
-            transition: 0.15s;
-        }
-
-
-        .card:active {
-            transform: scale(0.98);
-        }
-
 
         .capa {
-            width: 100%;
-            height: 210px;
-            background: #e8f2f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-            overflow: hidden;
+            height: 175px;
         }
 
+    }
 
-        .capa img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-
-        .favorito {
-            position: absolute;
-            right: 8px;
-            top: 8px;
-            width: 29px;
-            height: 29px;
-            border-radius: 50%;
-            border: none;
-            background: rgba(255,255,255,0.92);
-            font-size: 15px;
-            cursor: pointer;
-            z-index: 2;
-        }
-
-
-        .informacoes {
-            padding: 11px;
-        }
-
-
-        .tipo-card {
-            color: #71808a;
-            font-size: 8px;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
-
-
-        .titulo-card {
-            font-size: 12px;
-            font-weight: bold;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-bottom: 5px;
-        }
-
-
-        .autor-card {
-            color: #71808a;
-            font-size: 9px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-bottom: 7px;
-        }
-
-
-        .rodape-card {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-
-        .estrelas {
-            color: #eca72c;
-            font-size: 10px;
-            letter-spacing: 0;
-        }
-
-
-        .status {
-            font-size: 8px;
-            padding: 4px 6px;
-            border-radius: 8px;
-            background: #eef3f4;
-            color: #52707a;
-        }
-
-
-        /* =========================
-           VAZIO
-        ========================= */
-
-        .vazio {
-            display: none;
-            margin: 25px 20px;
-            background: white;
-            border: 1px solid #dce4e8;
-            border-radius: 18px;
-            padding: 35px 20px;
-            text-align: center;
-        }
-
-
-        .vazio-icone {
-            font-size: 45px;
-            margin-bottom: 10px;
-        }
-
-
-        .vazio strong {
-            display: block;
-            font-size: 14px;
-            margin-bottom: 7px;
-        }
-
-
-        .vazio p {
-            color: #71808a;
-            font-size: 10px;
-            line-height: 1.5;
-            margin-bottom: 15px;
-        }
-
-
-        .vazio button {
-            border: none;
-            background: #0b4353;
-            color: white;
-            border-radius: 12px;
-            padding: 11px 17px;
-            font-size: 11px;
-            cursor: pointer;
-        }
-
-
-        /* =========================
-           MENU INFERIOR
-        ========================= */
-
-        .menu {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: min(430px, 100%);
-            height: 70px;
-            background: white;
-            border-top: 1px solid #dce4e8;
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            z-index: 10;
-        }
-
-
-        .menu button {
-            border: none;
-            background: transparent;
-            color: #71808a;
-            font-size: 9px;
-            cursor: pointer;
-        }
-
-
-        .menu button span {
-            display: block;
-            font-size: 19px;
-            margin-bottom: 4px;
-        }
-
-
-        .menu button.ativo {
-            color: #0b4353;
-            font-weight: bold;
-        }
-
-
-        /* =========================
-           MODO ESCURO
-        ========================= */
-
-        body.modo-escuro {
-            background: #10191d;
-            color: #edf4f5;
-        }
-
-
-        body.modo-escuro .contador,
-        body.modo-escuro .resultado,
-        body.modo-escuro .tipo-card,
-        body.modo-escuro .autor-card {
-            color: #9eafb5;
-        }
-
-
-        body.modo-escuro .busca input {
-            background: #18252a;
-            border-color: #2b3b40;
-            color: #edf4f5;
-        }
-
-
-        body.modo-escuro .busca input::placeholder {
-            color: #8d9da2;
-        }
-
-
-        body.modo-escuro .filtro {
-            background: #18252a;
-            border-color: #2b3b40;
-            color: #aab8bd;
-        }
-
-
-        body.modo-escuro .filtro.ativo {
-            background: #0b4353;
-            color: white;
-            border-color: #0b4353;
-        }
-
-
-        body.modo-escuro .ordenacao {
-            color: #7fb1c0;
-        }
-
-
-        body.modo-escuro .card {
-            background: #18252a;
-            border-color: #2b3b40;
-        }
-
-
-        body.modo-escuro .capa {
-            background: #223238;
-        }
-
-
-        body.modo-escuro .status {
-            background: #26363b;
-            color: #aab8bd;
-        }
-
-
-        body.modo-escuro .vazio {
-            background: #18252a;
-            border-color: #2b3b40;
-        }
-
-
-        body.modo-escuro .vazio p {
-            color: #9eafb5;
-        }
-
-
-        body.modo-escuro .menu {
-            background: #151f23;
-            border-top-color: #2b3b40;
-        }
-
-
-        body.modo-escuro .menu button {
-            color: #9eafb5;
-        }
-
-
-        body.modo-escuro .menu button.ativo {
-            color: #7fb1c0;
-        }
-
-
-        /* =========================
-           RESPONSIVO
-        ========================= */
-
-        @media (max-width: 350px) {
-
-            .lista {
-                grid-template-columns: 1fr 1fr;
-                gap: 8px;
-            }
-
-
-            .capa {
-                height: 175px;
-            }
-
-        }
-
-    </style>
+</style>
+```
 
 </head>
 
-
 <body>
-
 
 <div class="app">
 
+```
+<header class="topo">
 
-    <!-- TOPO -->
+    <div class="topo-linha">
 
-    <header class="topo">
+        <div>
 
+            <h1>
+                Biblioteca
+            </h1>
 
-        <div class="topo-linha">
-
-
-            <div>
-
-                <h1>
-                    Biblioteca
-                </h1>
-
-                <div
-                    class="contador"
-                    id="contador"
-                >
-                    0 itens
-                </div>
-
+            <div
+                class="contador"
+                id="contador"
+            >
+                0 itens
             </div>
 
-
-            <button
-                class="botao-adicionar"
-                onclick="novoItem()"
-            >
-                +
-            </button>
-
-
         </div>
 
-
-        <!-- BUSCA -->
-
-        <div class="busca">
-
-            <span class="icone-busca">
-                🔍
-            </span>
-
-            <input
-                type="text"
-                id="busca"
-                placeholder="Buscar na sua Prateleira..."
-                oninput="renderizar()"
-            >
-
-        </div>
-
-
-    </header>
-
-
-    <!-- FILTROS -->
-
-    <div class="filtros">
-
-
         <button
-            class="filtro ativo"
-            data-filtro="Todos"
-            onclick="selecionarFiltro('Todos', this)"
-        >
-            Todos
-        </button>
-
-
-        <button
-            class="filtro"
-            data-filtro="Livro"
-            onclick="selecionarFiltro('Livro', this)"
-        >
-            📖 Livros
-        </button>
-
-
-        <button
-            class="filtro"
-            data-filtro="Filme"
-            onclick="selecionarFiltro('Filme', this)"
-        >
-            🎬 Filmes
-        </button>
-
-
-        <button
-            class="filtro"
-            data-filtro="Série"
-            onclick="selecionarFiltro('Série', this)"
-        >
-            📺 Séries
-        </button>
-
-
-        <button
-            class="filtro"
-            data-filtro="Favoritos"
-            onclick="selecionarFiltro('Favoritos', this)"
-        >
-            ❤️ Favoritos
-        </button>
-
-
-    </div>
-
-
-    <!-- ORGANIZAÇÃO -->
-
-    <div class="barra-organizacao">
-
-
-        <span
-            class="resultado"
-            id="resultado"
-        >
-            0 resultados
-        </span>
-
-
-        <select
-            class="ordenacao"
-            id="ordenacao"
-            onchange="renderizar()"
-        >
-
-            <option value="recentes">
-                Mais recentes
-            </option>
-
-            <option value="az">
-                A → Z
-            </option>
-
-            <option value="za">
-                Z → A
-            </option>
-
-            <option value="nota">
-                Melhor avaliação
-            </option>
-
-        </select>
-
-
-    </div>
-
-
-    <!-- LISTA -->
-
-    <div
-        class="lista"
-        id="lista"
-    ></div>
-
-
-    <!-- VAZIO -->
-
-    <div
-        class="vazio"
-        id="vazio"
-    >
-
-        <div class="vazio-icone">
-            📚
-        </div>
-
-
-        <strong id="tituloVazio">
-            Sua Prateleira está vazia
-        </strong>
-
-
-        <p id="textoVazio">
-            Adicione livros, filmes e séries
-            para começar sua coleção.
-        </p>
-
-
-        <button
+            class="botao-adicionar"
             onclick="novoItem()"
         >
-            + Adicionar primeiro item
+            +
         </button>
 
     </div>
 
+    <div class="busca">
+
+        <span class="icone-busca">
+            🔍
+        </span>
+
+        <input
+            type="text"
+            id="busca"
+            placeholder="Buscar na sua Prateleira..."
+            oninput="renderizar()"
+        >
+
+    </div>
+
+</header>
+
+<div class="filtros">
+
+    <button
+        class="filtro ativo"
+        data-filtro="Todos"
+        onclick="selecionarFiltro('Todos', this)"
+    >
+        Todos
+    </button>
+
+    <button
+        class="filtro"
+        data-filtro="Livro"
+        onclick="selecionarFiltro('Livro', this)"
+    >
+        📖 Livros
+    </button>
+
+    <button
+        class="filtro"
+        data-filtro="Filme"
+        onclick="selecionarFiltro('Filme', this)"
+    >
+        🎬 Filmes
+    </button>
+
+    <button
+        class="filtro"
+        data-filtro="Série"
+        onclick="selecionarFiltro('Série', this)"
+    >
+        📺 Séries
+    </button>
+
+    <button
+        class="filtro"
+        data-filtro="Favoritos"
+        onclick="selecionarFiltro('Favoritos', this)"
+    >
+        ❤️ Favoritos
+    </button>
 
 </div>
 
+<div class="barra-organizacao">
 
-<!-- MENU -->
+    <span
+        class="resultado"
+        id="resultado"
+    >
+        0 resultados
+    </span>
 
-<nav class="menu">
-
-
-    <button
-        onclick="location.href='index.html'"
+    <select
+        class="ordenacao"
+        id="ordenacao"
+        onchange="renderizar()"
     >
 
-        <span>
-            🏠
-        </span>
+        <option value="recentes">
+            Mais recentes
+        </option>
 
-        Início
+        <option value="az">
+            A → Z
+        </option>
 
-    </button>
+        <option value="za">
+            Z → A
+        </option>
 
+        <option value="nota">
+            Melhor avaliação
+        </option>
 
-    <button
-        class="ativo"
-        onclick="location.href='biblioteca.html'"
-    >
+    </select>
 
-        <span>
-            📚
-        </span>
+</div>
 
-        Biblioteca
+<div
+    class="lista"
+    id="lista"
+></div>
 
-    </button>
+<div
+    class="vazio"
+    id="vazio"
+>
 
+    <div class="vazio-icone">
+        📚
+    </div>
+
+    <strong id="tituloVazio">
+        Sua Prateleira está vazia
+    </strong>
+
+    <p id="textoVazio">
+        Adicione livros, filmes e séries
+        para começar sua coleção.
+    </p>
 
     <button
         onclick="novoItem()"
     >
-
-        <span>
-            ＋
-        </span>
-
-        Adicionar
-
+        + Adicionar primeiro item
     </button>
 
+</div>
+```
 
-    <button
-        onclick="location.href='estatisticas.html'"
-    >
+</div>
 
-        <span>
-            📊
-        </span>
+<nav class="menu">
 
-        Estatísticas
+```
+<button
+    onclick="location.href='index.html'"
+>
 
-    </button>
+    <span>
+        🏠
+    </span>
 
+    Início
 
-    <button
-        onclick="location.href='perfil.html'"
-    >
+</button>
 
-        <span>
-            👤
-        </span>
+<button
+    class="ativo"
+    onclick="location.href='biblioteca.html'"
+>
 
-        Perfil
+    <span>
+        📚
+    </span>
 
-    </button>
+    Biblioteca
 
+</button>
+
+<button
+    onclick="novoItem()"
+>
+
+    <span>
+        ＋
+    </span>
+
+    Adicionar
+
+</button>
+
+<button
+    onclick="location.href='estatisticas.html'"
+>
+
+    <span>
+        📊
+    </span>
+
+    Estatísticas
+
+</button>
+
+<button
+    onclick="location.href='perfil.html'"
+>
+
+    <span>
+        👤
+    </span>
+
+    Perfil
+
+</button>
+```
 
 </nav>
 
-
 <script>
-
 
 /* =========================
    MODO GLOBAL
 ========================= */
 
-
 function aplicarModo() {
 
     const modo =
         localStorage.getItem("modoPrateleira") || "claro";
-
 
     if (modo === "escuro") {
 
@@ -808,14 +706,11 @@ function aplicarModo() {
 
 }
 
-
 /* =========================
    DADOS
 ========================= */
 
-
 let acervo = [];
-
 
 try {
 
@@ -830,25 +725,20 @@ try {
 
 }
 
-
 let filtroAtual =
     "Todos";
-
 
 /* =========================
    FILTRO
 ========================= */
-
 
 function selecionarFiltro(
     filtro,
     botao
 ) {
 
-
     filtroAtual =
         filtro;
-
 
     document
         .querySelectorAll(".filtro")
@@ -862,24 +752,19 @@ function selecionarFiltro(
             }
         );
 
-
     botao.classList.add(
         "ativo"
     );
-
 
     renderizar();
 
 }
 
-
 /* =========================
    RENDERIZAR
 ========================= */
 
-
 function renderizar() {
-
 
     try {
 
@@ -894,14 +779,12 @@ function renderizar() {
 
     }
 
-
     const busca =
         document
             .getElementById("busca")
             .value
             .toLowerCase()
             .trim();
-
 
     let itens =
         acervo.map(
@@ -915,14 +798,10 @@ function renderizar() {
             }
         );
 
-
-    /* FILTRO */
-
     if (
         filtroAtual !==
         "Todos"
     ) {
-
 
         if (
             filtroAtual ===
@@ -954,37 +833,28 @@ function renderizar() {
 
     }
 
-
-    /* BUSCA */
-
     if (busca) {
-
 
         itens =
             itens.filter(
                 function(item) {
-
 
                     const titulo =
                         (
                             item.titulo || ""
                         ).toLowerCase();
 
-
                     const autor =
                         (
                             item.autor || ""
                         ).toLowerCase();
-
 
                     const genero =
                         (
                             item.genero || ""
                         ).toLowerCase();
 
-
                     return (
-
                         titulo.includes(
                             busca
                         ) ||
@@ -996,7 +866,6 @@ function renderizar() {
                         genero.includes(
                             busca
                         )
-
                     );
 
                 }
@@ -1004,14 +873,10 @@ function renderizar() {
 
     }
 
-
-    /* ORDENAÇÃO */
-
     const ordenacao =
         document
             .getElementById("ordenacao")
             .value;
-
 
     if (
         ordenacao ===
@@ -1032,7 +897,6 @@ function renderizar() {
 
     }
 
-
     if (
         ordenacao ===
         "za"
@@ -1051,7 +915,6 @@ function renderizar() {
         );
 
     }
-
 
     if (
         ordenacao ===
@@ -1073,7 +936,6 @@ function renderizar() {
 
     }
 
-
     if (
         ordenacao ===
         "recentes"
@@ -1090,9 +952,6 @@ function renderizar() {
 
     }
 
-
-    /* CONTADORES */
-
     document.getElementById(
         "contador"
     ).textContent =
@@ -1103,7 +962,6 @@ function renderizar() {
                 ? " item"
                 : " itens"
         );
-
 
     document.getElementById(
         "resultado"
@@ -1116,45 +974,34 @@ function renderizar() {
                 : " resultados"
         );
 
-
-    /* LISTA */
-
     const lista =
         document.getElementById(
             "lista"
         );
 
-
     lista.innerHTML =
         "";
-
 
     if (
         itens.length === 0
     ) {
 
-
         lista.style.display =
             "none";
 
-
         mostrarVazio();
-
 
         return;
 
     }
 
-
     lista.style.display =
         "grid";
-
 
     document.getElementById(
         "vazio"
     ).style.display =
         "none";
-
 
     itens.forEach(
         function(item) {
@@ -1168,26 +1015,21 @@ function renderizar() {
 
 }
 
-
 /* =========================
    CRIAR CARD
 ========================= */
 
-
 function criarCard(
     item
 ) {
-
 
     const card =
         document.createElement(
             "div"
         );
 
-
     card.className =
         "card";
-
 
     card.onclick =
         function() {
@@ -1198,12 +1040,8 @@ function criarCard(
 
         };
 
-
-    /* ÍCONE */
-
     let icone =
         "📖";
-
 
     if (
         item.tipo ===
@@ -1215,7 +1053,6 @@ function criarCard(
 
     }
 
-
     if (
         item.tipo ===
         "Série"
@@ -1226,13 +1063,6 @@ function criarCard(
 
     }
 
-
-    /* CAPA */
-
-    let capa =
-        `<span>${icone}</span>`;
-
-
     if (
         item.capa
     ) {
@@ -1242,34 +1072,24 @@ function criarCard(
                 "img"
             );
 
-
         imagem.src =
             item.capa;
-
 
         imagem.alt =
             item.titulo ||
             "Capa";
-
-
-        capa =
-            "";
-
 
         const areaCapa =
             document.createElement(
                 "div"
             );
 
-
         areaCapa.className =
             "capa";
-
 
         areaCapa.appendChild(
             imagem
         );
-
 
         card.appendChild(
             areaCapa
@@ -1282,25 +1102,20 @@ function criarCard(
                 "div"
             );
 
-
         areaCapa.className =
             "capa";
-
 
         const span =
             document.createElement(
                 "span"
             );
 
-
         span.textContent =
             icone;
-
 
         areaCapa.appendChild(
             span
         );
-
 
         card.appendChild(
             areaCapa
@@ -1308,12 +1123,8 @@ function criarCard(
 
     }
 
-
-    /* ESTRELAS */
-
     const nota =
         Number(item.nota) || 0;
-
 
     const estrelas =
         nota > 0
@@ -1321,12 +1132,8 @@ function criarCard(
                 + "☆".repeat(5 - nota)
             : "☆☆☆☆☆";
 
-
-    /* STATUS */
-
     let status =
         "Quero ver";
-
 
     if (
         item.status ===
@@ -1338,7 +1145,6 @@ function criarCard(
 
     }
 
-
     if (
         item.status ===
         "concluido"
@@ -1349,34 +1155,26 @@ function criarCard(
 
     }
 
-
-    /* FAVORITO */
-
     const favorito =
         document.createElement(
             "button"
         );
 
-
     favorito.className =
         "favorito";
 
-
     favorito.title =
         "Favorito";
-
 
     favorito.textContent =
         item.favorito === true
             ? "❤️"
             : "♡";
 
-
     favorito.onclick =
         function(event) {
 
             event.stopPropagation();
-
 
             alternarFavorito(
                 item.indice
@@ -1384,156 +1182,123 @@ function criarCard(
 
         };
 
-
     card.appendChild(
         favorito
     );
-
-
-    /* INFORMAÇÕES */
 
     const informacoes =
         document.createElement(
             "div"
         );
 
-
     informacoes.className =
         "informacoes";
-
 
     const tipo =
         document.createElement(
             "div"
         );
 
-
     tipo.className =
         "tipo-card";
-
 
     tipo.textContent =
         item.tipo ||
         "Item";
-
 
     const titulo =
         document.createElement(
             "div"
         );
 
-
     titulo.className =
         "titulo-card";
-
 
     titulo.textContent =
         item.titulo ||
         "Sem título";
-
 
     const autor =
         document.createElement(
             "div"
         );
 
-
     autor.className =
         "autor-card";
-
 
     autor.textContent =
         item.autor ||
         "";
-
 
     const rodape =
         document.createElement(
             "div"
         );
 
-
     rodape.className =
         "rodape-card";
-
 
     const estrelasElemento =
         document.createElement(
             "div"
         );
 
-
     estrelasElemento.className =
         "estrelas";
 
-
     estrelasElemento.textContent =
         estrelas;
-
 
     const statusElemento =
         document.createElement(
             "div"
         );
 
-
     statusElemento.className =
         "status";
 
-
     statusElemento.textContent =
         status;
-
 
     rodape.appendChild(
         estrelasElemento
     );
 
-
     rodape.appendChild(
         statusElemento
     );
-
 
     informacoes.appendChild(
         tipo
     );
 
-
     informacoes.appendChild(
         titulo
     );
-
 
     informacoes.appendChild(
         autor
     );
 
-
     informacoes.appendChild(
         rodape
     );
-
 
     card.appendChild(
         informacoes
     );
 
-
     return card;
 
 }
-
 
 /* =========================
    FAVORITO
 ========================= */
 
-
 function alternarFavorito(
     indice
 ) {
-
 
     if (
         !acervo[indice]
@@ -1543,31 +1308,25 @@ function alternarFavorito(
 
     }
 
-
     acervo[indice].favorito =
         acervo[indice].favorito !== true;
-
 
     localStorage.setItem(
         "acervo",
         JSON.stringify(acervo)
     );
 
-
     renderizar();
 
 }
-
 
 /* =========================
    DETALHES
 ========================= */
 
-
 function abrirDetalhes(
     indice
 ) {
-
 
     if (
         !acervo[indice]
@@ -1577,67 +1336,54 @@ function abrirDetalhes(
 
     }
 
-
     localStorage.setItem(
         "itemSelecionado",
         indice
     );
-
 
     location.href =
         "detalhes.html";
 
 }
 
-
 /* =========================
    NOVO ITEM
 ========================= */
 
-
 function novoItem() {
-
 
     localStorage.removeItem(
         "itemEditando"
     );
-
 
     location.href =
         "novo.html";
 
 }
 
-
 /* =========================
    VAZIO
 ========================= */
 
-
 function mostrarVazio() {
-
 
     const vazio =
         document.getElementById(
             "vazio"
         );
 
-
     vazio.style.display =
         "block";
-
 
     const titulo =
         document.getElementById(
             "tituloVazio"
         );
 
-
     const texto =
         document.getElementById(
             "textoVazio"
         );
-
 
     if (
         filtroAtual !==
@@ -1648,20 +1394,16 @@ function mostrarVazio() {
             .trim()
     ) {
 
-
         titulo.textContent =
             "Nenhum item encontrado";
-
 
         texto.textContent =
             "Tente mudar o filtro ou fazer outra busca.";
 
     } else {
 
-
         titulo.textContent =
             "Sua Prateleira está vazia";
-
 
         texto.textContent =
             "Adicione livros, filmes e séries para começar sua coleção.";
@@ -1670,72 +1412,15 @@ function mostrarVazio() {
 
 }
 
-    /* =========================
-           MODO ESCURO
-        ========================= */
-
-        body.modo-escuro {
-            background: #10191d;
-            color: #edf4f5;
-        }
-
-
-        body.modo-escuro .topo p,
-        body.modo-escuro .texto-card,
-        body.modo-escuro .avaliacao-texto,
-        body.modo-escuro .vazio {
-            color: #9eafb5;
-        }
-
-
-        body.modo-escuro .card-resumo,
-        body.modo-escuro .tipo,
-        body.modo-escuro .status-card,
-        body.modo-escuro .avaliacao-card {
-            background: #18252a;
-            border-color: #2b3b40;
-        }
-
-
-        body.modo-escuro .barra {
-            background: #26363b;
-        }
-
-
-        body.modo-escuro .status-linha {
-            border-bottom-color: #2b3b40;
-        }
-
-
-        body.modo-escuro .navegacao {
-            background: #151f23;
-            border-top-color: #2b3b40;
-        }
-
-
-        body.modo-escuro .nav-item {
-            color: #9eafb5;
-        }
-
-
-        body.modo-escuro .nav-item.ativo {
-            color: #7fb1c0;
-        }
-
-
-
 /* =========================
    INICIAR
 ========================= */
-
 
 aplicarModo();
 
 renderizar();
 
-
 </script>
-
 
 </body>
 
