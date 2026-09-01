@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Biblioteca - Acervo</title>
+    <title>Biblioteca - Prateleira</title>
 
 
     <style>
@@ -26,6 +26,7 @@
             font-family: Arial, Helvetica, sans-serif;
             background: #f7f9fa;
             color: #092d3d;
+            transition: 0.2s;
         }
 
 
@@ -389,6 +390,99 @@
 
 
         /* =========================
+           MODO ESCURO
+        ========================= */
+
+        body.modo-escuro {
+            background: #10191d;
+            color: #edf4f5;
+        }
+
+
+        body.modo-escuro .contador,
+        body.modo-escuro .resultado,
+        body.modo-escuro .tipo-card,
+        body.modo-escuro .autor-card {
+            color: #9eafb5;
+        }
+
+
+        body.modo-escuro .busca input {
+            background: #18252a;
+            border-color: #2b3b40;
+            color: #edf4f5;
+        }
+
+
+        body.modo-escuro .busca input::placeholder {
+            color: #8d9da2;
+        }
+
+
+        body.modo-escuro .filtro {
+            background: #18252a;
+            border-color: #2b3b40;
+            color: #aab8bd;
+        }
+
+
+        body.modo-escuro .filtro.ativo {
+            background: #0b4353;
+            color: white;
+            border-color: #0b4353;
+        }
+
+
+        body.modo-escuro .ordenacao {
+            color: #7fb1c0;
+        }
+
+
+        body.modo-escuro .card {
+            background: #18252a;
+            border-color: #2b3b40;
+        }
+
+
+        body.modo-escuro .capa {
+            background: #223238;
+        }
+
+
+        body.modo-escuro .status {
+            background: #26363b;
+            color: #aab8bd;
+        }
+
+
+        body.modo-escuro .vazio {
+            background: #18252a;
+            border-color: #2b3b40;
+        }
+
+
+        body.modo-escuro .vazio p {
+            color: #9eafb5;
+        }
+
+
+        body.modo-escuro .menu {
+            background: #151f23;
+            border-top-color: #2b3b40;
+        }
+
+
+        body.modo-escuro .menu button {
+            color: #9eafb5;
+        }
+
+
+        body.modo-escuro .menu button.ativo {
+            color: #7fb1c0;
+        }
+
+
+        /* =========================
            RESPONSIVO
         ========================= */
 
@@ -463,7 +557,7 @@
             <input
                 type="text"
                 id="busca"
-                placeholder="Buscar no seu Acervo..."
+                placeholder="Buscar na sua Prateleira..."
                 oninput="renderizar()"
             >
 
@@ -588,7 +682,7 @@
 
 
         <strong id="tituloVazio">
-            Seu Acervo está vazio
+            Sua Prateleira está vazia
         </strong>
 
 
@@ -663,7 +757,7 @@
             📊
         </span>
 
-        Stats
+        Estatísticas
 
     </button>
 
@@ -688,14 +782,53 @@
 
 
 /* =========================
+   MODO GLOBAL
+========================= */
+
+
+function aplicarModo() {
+
+    const modo =
+        localStorage.getItem("modoPrateleira") || "claro";
+
+
+    if (modo === "escuro") {
+
+        document.body.classList.add(
+            "modo-escuro"
+        );
+
+    } else {
+
+        document.body.classList.remove(
+            "modo-escuro"
+        );
+
+    }
+
+}
+
+
+/* =========================
    DADOS
 ========================= */
 
 
-let acervo =
-    JSON.parse(
-        localStorage.getItem("acervo")
-    ) || [];
+let acervo = [];
+
+
+try {
+
+    acervo =
+        JSON.parse(
+            localStorage.getItem("acervo")
+        ) || [];
+
+} catch (erro) {
+
+    acervo = [];
+
+}
 
 
 let filtroAtual =
@@ -748,10 +881,18 @@ function selecionarFiltro(
 function renderizar() {
 
 
-    acervo =
-        JSON.parse(
-            localStorage.getItem("acervo")
-        ) || [];
+    try {
+
+        acervo =
+            JSON.parse(
+                localStorage.getItem("acervo")
+            ) || [];
+
+    } catch (erro) {
+
+        acervo = [];
+
+    }
 
 
     const busca =
@@ -1089,24 +1230,81 @@ function criarCard(
     /* CAPA */
 
     let capa =
-        `
-        <span>
-            ${icone}
-        </span>
-        `;
+        `<span>${icone}</span>`;
 
 
     if (
         item.capa
     ) {
 
+        const imagem =
+            document.createElement(
+                "img"
+            );
+
+
+        imagem.src =
+            item.capa;
+
+
+        imagem.alt =
+            item.titulo ||
+            "Capa";
+
+
         capa =
-            `
-            <img
-                src="${item.capa}"
-                alt="${item.titulo || "Capa"}"
-            >
-            `;
+            "";
+
+
+        const areaCapa =
+            document.createElement(
+                "div"
+            );
+
+
+        areaCapa.className =
+            "capa";
+
+
+        areaCapa.appendChild(
+            imagem
+        );
+
+
+        card.appendChild(
+            areaCapa
+        );
+
+    } else {
+
+        const areaCapa =
+            document.createElement(
+                "div"
+            );
+
+
+        areaCapa.className =
+            "capa";
+
+
+        const span =
+            document.createElement(
+                "span"
+            );
+
+
+        span.textContent =
+            icone;
+
+
+        areaCapa.appendChild(
+            span
+        );
+
+
+        card.appendChild(
+            areaCapa
+        );
 
     }
 
@@ -1152,96 +1350,30 @@ function criarCard(
     }
 
 
-    card.innerHTML = `
-
-        <button
-            class="favorito"
-            title="Favorito"
-        >
-            ${
-                item.favorito === true
-                    ? "❤️"
-                    : "♡"
-            }
-        </button>
-
-
-        <div class="capa">
-
-            ${capa}
-
-        </div>
-
-
-        <div class="informacoes">
-
-
-            <div class="tipo-card">
-
-                ${
-                    item.tipo ||
-                    "Item"
-                }
-
-            </div>
-
-
-            <div class="titulo-card">
-
-                ${
-                    item.titulo ||
-                    "Sem título"
-                }
-
-            </div>
-
-
-            <div class="autor-card">
-
-                ${
-                    item.autor ||
-                    ""
-                }
-
-            </div>
-
-
-            <div class="rodape-card">
-
-
-                <div class="estrelas">
-
-                    ${estrelas}
-
-                </div>
-
-
-                <div class="status">
-
-                    ${status}
-
-                </div>
-
-
-            </div>
-
-
-        </div>
-
-    `;
-
-
     /* FAVORITO */
 
     const favorito =
-        card.querySelector(
-            ".favorito"
+        document.createElement(
+            "button"
         );
+
+
+    favorito.className =
+        "favorito";
+
+
+    favorito.title =
+        "Favorito";
+
+
+    favorito.textContent =
+        item.favorito === true
+            ? "❤️"
+            : "♡";
 
 
     favorito.onclick =
         function(event) {
-
 
             event.stopPropagation();
 
@@ -1251,6 +1383,141 @@ function criarCard(
             );
 
         };
+
+
+    card.appendChild(
+        favorito
+    );
+
+
+    /* INFORMAÇÕES */
+
+    const informacoes =
+        document.createElement(
+            "div"
+        );
+
+
+    informacoes.className =
+        "informacoes";
+
+
+    const tipo =
+        document.createElement(
+            "div"
+        );
+
+
+    tipo.className =
+        "tipo-card";
+
+
+    tipo.textContent =
+        item.tipo ||
+        "Item";
+
+
+    const titulo =
+        document.createElement(
+            "div"
+        );
+
+
+    titulo.className =
+        "titulo-card";
+
+
+    titulo.textContent =
+        item.titulo ||
+        "Sem título";
+
+
+    const autor =
+        document.createElement(
+            "div"
+        );
+
+
+    autor.className =
+        "autor-card";
+
+
+    autor.textContent =
+        item.autor ||
+        "";
+
+
+    const rodape =
+        document.createElement(
+            "div"
+        );
+
+
+    rodape.className =
+        "rodape-card";
+
+
+    const estrelasElemento =
+        document.createElement(
+            "div"
+        );
+
+
+    estrelasElemento.className =
+        "estrelas";
+
+
+    estrelasElemento.textContent =
+        estrelas;
+
+
+    const statusElemento =
+        document.createElement(
+            "div"
+        );
+
+
+    statusElemento.className =
+        "status";
+
+
+    statusElemento.textContent =
+        status;
+
+
+    rodape.appendChild(
+        estrelasElemento
+    );
+
+
+    rodape.appendChild(
+        statusElemento
+    );
+
+
+    informacoes.appendChild(
+        tipo
+    );
+
+
+    informacoes.appendChild(
+        titulo
+    );
+
+
+    informacoes.appendChild(
+        autor
+    );
+
+
+    informacoes.appendChild(
+        rodape
+    );
+
+
+    card.appendChild(
+        informacoes
+    );
 
 
     return card;
@@ -1393,7 +1660,7 @@ function mostrarVazio() {
 
 
         titulo.textContent =
-            "Seu Acervo está vazio";
+            "Sua Prateleira está vazia";
 
 
         texto.textContent =
@@ -1408,6 +1675,8 @@ function mostrarVazio() {
    INICIAR
 ========================= */
 
+
+aplicarModo();
 
 renderizar();
 
