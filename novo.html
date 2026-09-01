@@ -1,0 +1,1982 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Novo item - Prateleira</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f9fa;
+            color: #092d3d;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .app {
+            max-width: 430px;
+            margin: auto;
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+
+        /* TOPO */
+
+        .topo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 25px 20px 20px;
+        }
+
+        .topo-esquerda {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .voltar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #dce4e8;
+            background: white;
+            font-size: 20px;
+            color: #092d3d;
+            cursor: pointer;
+        }
+
+        .topo h1 {
+            font-size: 24px;
+        }
+
+        /* TIPO */
+
+        .titulo-secao {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0 20px 10px;
+        }
+
+        .tipos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 9px;
+            margin: 0 20px 22px;
+        }
+
+        .tipo {
+            background: white;
+            border: 1px solid #dce4e8;
+            border-radius: 17px;
+            padding: 15px 8px;
+            text-align: center;
+            cursor: pointer;
+            color: #71808a;
+            font-size: 12px;
+        }
+
+        .tipo span {
+            display: block;
+            font-size: 25px;
+            margin-bottom: 6px;
+        }
+
+        .tipo.ativo {
+            background: #0b4353;
+            color: white;
+            border-color: #0b4353;
+        }
+
+        /* FORMULÁRIO */
+
+        .formulario {
+            margin: 0 20px;
+        }
+
+        .campo {
+            margin-bottom: 16px;
+        }
+
+        .campo label {
+            display: block;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .campo input,
+        .campo select,
+        .campo textarea {
+            width: 100%;
+            border: 1px solid #dce4e8;
+            background: white;
+            border-radius: 14px;
+            padding: 13px 14px;
+            font-size: 13px;
+            color: #092d3d;
+            outline: none;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .campo input:focus,
+        .campo select:focus,
+        .campo textarea:focus {
+            border-color: #0b4353;
+        }
+
+        .campo textarea {
+            height: 90px;
+            resize: none;
+        }
+
+        .linha {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        /* CAPA */
+
+        .capa-area {
+            background: white;
+            border: 1px solid #dce4e8;
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .capa-preview {
+            width: 100px;
+            height: 135px;
+            margin: 0 auto 12px;
+            border-radius: 10px;
+            background: #e8f2f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            font-size: 35px;
+        }
+
+        .capa-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .capa-botao {
+            border: 1px solid #dce4e8;
+            background: white;
+            color: #0b4353;
+            border-radius: 12px;
+            padding: 10px 14px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .capa-ajuda {
+            display: block;
+            color: #71808a;
+            font-size: 9px;
+            margin-top: 7px;
+        }
+
+        /* INFORMAÇÕES DA LEITURA */
+
+        .leitura-area {
+            background: #e8f2f0;
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 16px;
+        }
+
+        .leitura-titulo {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .leitura-ajuda {
+            color: #71808a;
+            font-size: 9px;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .numero-leitura {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0b4353;
+            margin-bottom: 12px;
+        }
+
+        .mes-label {
+            display: block;
+            font-size: 10px;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .mes-input {
+            width: 100%;
+            border: 1px solid #dce4e8;
+            background: white;
+            border-radius: 12px;
+            padding: 11px;
+            font-size: 12px;
+            color: #092d3d;
+        }
+
+        /* AVALIAÇÃO */
+
+        .avaliacao {
+            background: white;
+            border: 1px solid #dce4e8;
+            border-radius: 16px;
+            padding: 13px;
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .estrela {
+            border: none;
+            background: none;
+            font-size: 27px;
+            color: #c5cdd1;
+            cursor: pointer;
+        }
+
+        .estrela.selecionada {
+            color: #eca72c;
+        }
+
+        /* FAVORITO */
+
+        .favorito {
+            background: white;
+            border: 1px solid #dce4e8;
+            border-radius: 15px;
+            padding: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+
+        .favorito-texto strong {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 3px;
+        }
+
+        .favorito-texto span {
+            font-size: 11px;
+            color: #71808a;
+        }
+
+        .switch {
+            width: 48px;
+            height: 27px;
+            background: #d9e1e5;
+            border-radius: 20px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .switch::after {
+            content: "";
+            position: absolute;
+            width: 21px;
+            height: 21px;
+            background: white;
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        .switch.ativo {
+            background: #0b4353;
+        }
+
+        .switch.ativo::after {
+            left: 24px;
+        }
+
+        /* SALVAR */
+
+        .salvar {
+            width: 100%;
+            border: none;
+            border-radius: 17px;
+            padding: 15px;
+            background: #0b4353;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 12px;
+        }
+
+        .cancelar {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: #71808a;
+            font-size: 13px;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        /* MENSAGEM */
+
+        .mensagem {
+            display: none;
+            background: #e8f2f0;
+            color: #0b4353;
+            border-radius: 14px;
+            padding: 12px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        /* MODO ESCURO */
+
+        body.modo-escuro {
+            background: #10191d;
+            color: #e8eeee;
+        }
+
+        body.modo-escuro .voltar,
+        body.modo-escuro .tipo,
+        body.modo-escuro .campo input,
+        body.modo-escuro .campo select,
+        body.modo-escuro .campo textarea,
+        body.modo-escuro .capa-area,
+        body.modo-escuro .avaliacao,
+        body.modo-escuro .favorito {
+            background: #18262b;
+            border-color: #2a3b41;
+            color: #e8eeee;
+        }
+
+        body.modo-escuro .tipo.ativo {
+            background: #0b4353;
+            color: white;
+            border-color: #0b4353;
+        }
+
+        body.modo-escuro .capa-preview {
+            background: #24363c;
+        }
+
+        body.modo-escuro .capa-botao {
+            background: #18262b;
+            border-color: #2a3b41;
+            color: #7fc1c9;
+        }
+
+        body.modo-escuro .capa-ajuda,
+        body.modo-escuro .favorito-texto span,
+        body.modo-escuro .leitura-ajuda,
+        body.modo-escuro .cancelar {
+            color: #9eafb5;
+        }
+
+        body.modo-escuro .leitura-area {
+            background: #182f33;
+        }
+
+        body.modo-escuro .numero-leitura {
+            color: #7fc1c9;
+        }
+
+        body.modo-escuro .mes-input {
+            background: #18262b;
+            border-color: #2a3b41;
+            color: #e8eeee;
+        }
+
+        body.modo-escuro .mensagem {
+            background: #182f33;
+            color: #7fc1c9;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- TOPO -->
+
+    <header class="topo">
+
+        <div class="topo-esquerda">
+
+            <button
+                class="voltar"
+                type="button"
+                onclick="voltar()"
+            >
+                ←
+            </button>
+
+            <h1 id="tituloPagina">
+                Novo item
+            </h1>
+
+        </div>
+
+    </header>
+
+
+    <!-- TIPO -->
+
+    <div class="titulo-secao">
+        O que você quer adicionar?
+    </div>
+
+    <div class="tipos">
+
+        <button
+            type="button"
+            class="tipo ativo"
+            onclick="selecionarTipo('Livro', this)"
+        >
+            <span>📖</span>
+            Livro
+        </button>
+
+        <button
+            type="button"
+            class="tipo"
+            onclick="selecionarTipo('Filme', this)"
+        >
+            <span>🎬</span>
+            Filme
+        </button>
+
+        <button
+            type="button"
+            class="tipo"
+            onclick="selecionarTipo('Série', this)"
+        >
+            <span>📺</span>
+            Série
+        </button>
+
+    </div>
+
+
+    <!-- FORMULÁRIO -->
+
+    <form
+        class="formulario"
+        onsubmit="salvarItem(event)"
+    >
+
+        <!-- CAPA -->
+
+        <div class="capa-area">
+
+            <div
+                class="capa-preview"
+                id="capaPreview"
+            >
+                📖
+            </div>
+
+            <input
+                type="file"
+                id="arquivoCapa"
+                accept="image/*"
+                hidden
+                onchange="carregarCapa(event)"
+            >
+
+            <button
+                type="button"
+                class="capa-botao"
+                onclick="document.getElementById('arquivoCapa').click()"
+            >
+                🖼️ Escolher imagem
+            </button>
+
+            <span class="capa-ajuda">
+                Você pode escolher uma imagem do seu computador
+            </span>
+
+        </div>
+
+
+        <!-- TÍTULO -->
+
+        <div class="campo">
+
+            <label for="titulo">
+                Título
+            </label>
+
+            <input
+                type="text"
+                id="titulo"
+                placeholder="Digite o título"
+                required
+            >
+
+        </div>
+
+
+        <!-- AUTOR -->
+
+        <div class="campo">
+
+            <label
+                for="autor"
+                id="labelAutor"
+            >
+                Autor
+            </label>
+
+            <input
+                type="text"
+                id="autor"
+                placeholder="Nome do autor"
+                required
+            >
+
+        </div>
+
+
+        <!-- ANO / GÊNERO -->
+
+        <div class="linha">
+
+            <div class="campo">
+
+                <label for="ano">
+                    Ano
+                </label>
+
+                <input
+                    type="number"
+                    id="ano"
+                    placeholder="2026"
+                    min="1800"
+                    max="2100"
+                >
+
+            </div>
+
+            <div class="campo">
+
+                <label for="genero">
+                    Gênero
+                </label>
+
+                <select id="genero">
+
+                    <option value="">
+                        Selecionar
+                    </option>
+
+                    <option value="Romance">
+                        Romance
+                    </option>
+
+                    <option value="Drama">
+                        Drama
+                    </option>
+
+                    <option value="Comédia">
+                        Comédia
+                    </option>
+
+                    <option value="Ação">
+                        Ação
+                    </option>
+
+                    <option value="Terror">
+                        Terror
+                    </option>
+
+                    <option value="Suspense">
+                        Suspense
+                    </option>
+
+                    <option value="Fantasia">
+                        Fantasia
+                    </option>
+
+                    <option value="Ficção científica">
+                        Ficção científica
+                    </option>
+
+                    <option value="Biografia">
+                        Biografia
+                    </option>
+
+                    <option value="Outro">
+                        Outro
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- QUANTIDADE -->
+
+        <div class="campo">
+
+            <label
+                for="quantidade"
+                id="labelQuantidade"
+            >
+                Páginas
+            </label>
+
+            <input
+                type="number"
+                id="quantidade"
+                placeholder="Ex.: 300"
+                min="0"
+            >
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div class="campo">
+
+            <label for="status">
+                Status
+            </label>
+
+            <select
+                id="status"
+                onchange="atualizarNumeroLeitura()"
+            >
+
+                <option value="quero">
+                    Quero ler
+                </option>
+
+                <option value="andamento">
+                    Em andamento
+                </option>
+
+                <option value="concluido">
+                    Concluído
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- INFORMAÇÕES DA LEITURA -->
+
+        <div
+            class="leitura-area"
+            id="leituraArea"
+        >
+
+            <div class="leitura-titulo">
+                📚 Informações da leitura
+            </div>
+
+            <div class="leitura-ajuda">
+                O número da leitura é criado automaticamente
+                quando o livro é marcado como concluído.
+            </div>
+
+            <div
+                class="numero-leitura"
+                id="numeroLeitura"
+            >
+                Próxima leitura
+            </div>
+
+            <label
+                class="mes-label"
+                for="mesLeitura"
+            >
+                Mês em que você leu
+            </label>
+
+            <input
+                type="month"
+                id="mesLeitura"
+                class="mes-input"
+            >
+
+        </div>
+
+
+        <!-- AVALIAÇÃO -->
+
+        <div class="campo">
+
+            <label>
+                Sua avaliação
+            </label>
+
+            <div class="avaliacao">
+
+                <button
+                    type="button"
+                    class="estrela"
+                    onclick="avaliar(1)"
+                >
+                    ★
+                </button>
+
+                <button
+                    type="button"
+                    class="estrela"
+                    onclick="avaliar(2)"
+                >
+                    ★
+                </button>
+
+                <button
+                    type="button"
+                    class="estrela"
+                    onclick="avaliar(3)"
+                >
+                    ★
+                </button>
+
+                <button
+                    type="button"
+                    class="estrela"
+                    onclick="avaliar(4)"
+                >
+                    ★
+                </button>
+
+                <button
+                    type="button"
+                    class="estrela"
+                    onclick="avaliar(5)"
+                >
+                    ★
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- FAVORITO -->
+
+        <div class="favorito">
+
+            <div class="favorito-texto">
+
+                <strong>
+                    Adicionar aos favoritos
+                </strong>
+
+                <span>
+                    Marque para aparecer nos favoritos
+                </span>
+
+            </div>
+
+            <div
+                class="switch"
+                id="switchFavorito"
+                onclick="alternarFavorito()"
+            ></div>
+
+        </div>
+
+
+        <!-- OBSERVAÇÕES -->
+
+        <div class="campo">
+
+            <label for="observacoes">
+                Observações
+            </label>
+
+            <textarea
+                id="observacoes"
+                placeholder="Escreva alguma observação sobre este item..."
+            ></textarea>
+
+        </div>
+
+
+        <!-- MENSAGEM -->
+
+        <div
+            class="mensagem"
+            id="mensagem"
+        ></div>
+
+
+        <!-- SALVAR -->
+
+        <button
+            type="submit"
+            class="salvar"
+            id="botaoSalvar"
+        >
+            + &nbsp; Adicionar à Prateleira
+        </button>
+
+        <button
+            type="button"
+            class="cancelar"
+            onclick="voltar()"
+        >
+            Cancelar
+        </button>
+
+    </form>
+
+</div>
+
+
+<script>
+
+/* =========================
+   VARIÁVEIS
+========================= */
+
+let tipoSelecionado = "Livro";
+
+let notaSelecionada = 0;
+
+let favoritoSelecionado = false;
+
+let capaSelecionada = "";
+
+let acervo = [];
+
+try {
+
+    acervo =
+        JSON.parse(
+            localStorage.getItem("acervo")
+        ) || [];
+
+} catch (erro) {
+
+    acervo = [];
+
+}
+
+let indiceEditando =
+    localStorage.getItem("itemEditando");
+
+let modoEdicao =
+    indiceEditando !== null;
+
+let itemEditando =
+    modoEdicao
+        ? acervo[Number(indiceEditando)]
+        : null;
+
+
+/* =========================
+   MODO GLOBAL
+========================= */
+
+function aplicarModo() {
+
+    const modo =
+        localStorage.getItem(
+            "modoPrateleira"
+        ) || "claro";
+
+    if (modo === "escuro") {
+
+        document.body.classList.add(
+            "modo-escuro"
+        );
+
+    } else {
+
+        document.body.classList.remove(
+            "modo-escuro"
+        );
+
+    }
+}
+
+
+/* =========================
+   MÊS ATUAL
+========================= */
+
+function obterMesAtual() {
+
+    const agora = new Date();
+
+    const ano =
+        agora.getFullYear();
+
+    const mes =
+        String(
+            agora.getMonth() + 1
+        ).padStart(2, "0");
+
+    return ano + "-" + mes;
+}
+
+
+/* =========================
+   NÚMERO DA LEITURA
+========================= */
+
+function descobrirNumeroLeitura() {
+
+    const numeros =
+        acervo
+            .filter(function(item) {
+
+                return (
+                    item.tipo === "Livro" &&
+                    item.leituraNumero !== undefined &&
+                    item.leituraNumero !== null
+                );
+
+            })
+            .map(function(item) {
+
+                return Number(
+                    item.leituraNumero
+                );
+
+            })
+            .filter(function(numero) {
+
+                return !isNaN(numero);
+
+            });
+
+    if (numeros.length === 0) {
+
+        return 1;
+
+    }
+
+    return Math.max.apply(
+        null,
+        numeros
+    ) + 1;
+}
+
+
+/* =========================
+   ATUALIZAR NÚMERO
+========================= */
+
+function atualizarNumeroLeitura() {
+
+    const numeroElemento =
+        document.getElementById(
+            "numeroLeitura"
+        );
+
+    const status =
+        document.getElementById(
+            "status"
+        ).value;
+
+    if (tipoSelecionado !== "Livro") {
+
+        return;
+
+    }
+
+    if (
+        modoEdicao &&
+        itemEditando &&
+        itemEditando.leituraNumero
+    ) {
+
+        numeroElemento.textContent =
+            "Leitura #" +
+            itemEditando.leituraNumero;
+
+        return;
+
+    }
+
+    if (status === "concluido") {
+
+        numeroElemento.textContent =
+            "Leitura #" +
+            descobrirNumeroLeitura();
+
+    } else {
+
+        numeroElemento.textContent =
+            "Próxima leitura";
+
+    }
+}
+
+
+/* =========================
+   TIPO
+========================= */
+
+function selecionarTipo(tipo, botao) {
+
+    tipoSelecionado = tipo;
+
+    document
+        .querySelectorAll(".tipo")
+        .forEach(function(item) {
+
+            item.classList.remove(
+                "ativo"
+            );
+
+        });
+
+    botao.classList.add("ativo");
+
+    const labelAutor =
+        document.getElementById(
+            "labelAutor"
+        );
+
+    const campoAutor =
+        document.getElementById(
+            "autor"
+        );
+
+    const labelQuantidade =
+        document.getElementById(
+            "labelQuantidade"
+        );
+
+    const campoQuantidade =
+        document.getElementById(
+            "quantidade"
+        );
+
+    const leituraArea =
+        document.getElementById(
+            "leituraArea"
+        );
+
+    if (tipo === "Livro") {
+
+        labelAutor.textContent =
+            "Autor";
+
+        campoAutor.placeholder =
+            "Nome do autor";
+
+        labelQuantidade.textContent =
+            "Páginas";
+
+        campoQuantidade.placeholder =
+            "Ex.: 300";
+
+        leituraArea.style.display =
+            "block";
+
+        atualizarNumeroLeitura();
+
+    } else if (tipo === "Filme") {
+
+        labelAutor.textContent =
+            "Diretor";
+
+        campoAutor.placeholder =
+            "Nome do diretor";
+
+        labelQuantidade.textContent =
+            "Duração (min)";
+
+        campoQuantidade.placeholder =
+            "Ex.: 120";
+
+        leituraArea.style.display =
+            "none";
+
+    } else {
+
+        labelAutor.textContent =
+            "Criador";
+
+        campoAutor.placeholder =
+            "Nome do criador";
+
+        labelQuantidade.textContent =
+            "Episódios";
+
+        campoQuantidade.placeholder =
+            "Ex.: 10";
+
+        leituraArea.style.display =
+            "none";
+
+    }
+
+    atualizarIconeCapa();
+}
+
+
+/* =========================
+   CAPA
+========================= */
+
+function carregarCapa(event) {
+
+    const arquivo =
+        event.target.files[0];
+
+    if (!arquivo) {
+
+        return;
+
+    }
+
+    const leitor =
+        new FileReader();
+
+    leitor.onload =
+        function(e) {
+
+            capaSelecionada =
+                e.target.result;
+
+            const preview =
+                document.getElementById(
+                    "capaPreview"
+                );
+
+            preview.innerHTML = "";
+
+            const imagem =
+                document.createElement(
+                    "img"
+                );
+
+            imagem.src =
+                capaSelecionada;
+
+            imagem.alt =
+                "Capa";
+
+            preview.appendChild(
+                imagem
+            );
+
+        };
+
+    leitor.readAsDataURL(
+        arquivo
+    );
+}
+
+
+/* =========================
+   ÍCONE DA CAPA
+========================= */
+
+function atualizarIconeCapa() {
+
+    if (capaSelecionada) {
+
+        return;
+
+    }
+
+    let icone = "📖";
+
+    if (tipoSelecionado === "Filme") {
+
+        icone = "🎬";
+
+    }
+
+    if (tipoSelecionado === "Série") {
+
+        icone = "📺";
+
+    }
+
+    document.getElementById(
+        "capaPreview"
+    ).textContent = icone;
+}
+
+
+/* =========================
+   AVALIAÇÃO
+========================= */
+
+function avaliar(nota) {
+
+    notaSelecionada = nota;
+
+    const estrelas =
+        document.querySelectorAll(
+            ".estrela"
+        );
+
+    estrelas.forEach(
+        function(estrela, indice) {
+
+            if (indice < nota) {
+
+                estrela.classList.add(
+                    "selecionada"
+                );
+
+            } else {
+
+                estrela.classList.remove(
+                    "selecionada"
+                );
+
+            }
+
+        }
+    );
+}
+
+
+/* =========================
+   FAVORITO
+========================= */
+
+function alternarFavorito() {
+
+    favoritoSelecionado =
+        !favoritoSelecionado;
+
+    const botao =
+        document.getElementById(
+            "switchFavorito"
+        );
+
+    botao.classList.toggle(
+        "ativo",
+        favoritoSelecionado
+    );
+}
+
+
+/* =========================
+   FORMATAR MÊS
+========================= */
+
+function formatarMes(valor) {
+
+    if (!valor) {
+
+        return "";
+
+    }
+
+    const partes =
+        valor.split("-");
+
+    const ano =
+        partes[0];
+
+    const mes =
+        Number(partes[1]);
+
+    const nomesMeses = [
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro"
+    ];
+
+    if (
+        !mes ||
+        mes < 1 ||
+        mes > 12
+    ) {
+
+        return "";
+
+    }
+
+    return (
+        nomesMeses[mes - 1] +
+        "/" +
+        ano
+    );
+}
+
+
+/* =========================
+   CONVERTER MÊS SALVO
+========================= */
+
+function converterMesParaInput(valor) {
+
+    if (!valor) {
+
+        return "";
+
+    }
+
+    if (
+        valor.indexOf("-") !== -1
+    ) {
+
+        return valor;
+
+    }
+
+    const partes =
+        valor.split("/");
+
+    if (partes.length !== 2) {
+
+        return "";
+
+    }
+
+    const nomesMeses = [
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro"
+    ];
+
+    const indice =
+        nomesMeses.indexOf(
+            partes[0]
+        );
+
+    if (indice === -1) {
+
+        return "";
+
+    }
+
+    return (
+        partes[1] +
+        "-" +
+        String(
+            indice + 1
+        ).padStart(2, "0")
+    );
+}
+
+
+/* =========================
+   SALVAR
+========================= */
+
+function salvarItem(event) {
+
+    event.preventDefault();
+
+    const titulo =
+        document.getElementById(
+            "titulo"
+        ).value.trim();
+
+    const autor =
+        document.getElementById(
+            "autor"
+        ).value.trim();
+
+    const ano =
+        document.getElementById(
+            "ano"
+        ).value;
+
+    const genero =
+        document.getElementById(
+            "genero"
+        ).value;
+
+    const quantidade =
+        document.getElementById(
+            "quantidade"
+        ).value;
+
+    const status =
+        document.getElementById(
+            "status"
+        ).value;
+
+    const observacoes =
+        document.getElementById(
+            "observacoes"
+        ).value.trim();
+
+    const mesLeitura =
+        document.getElementById(
+            "mesLeitura"
+        ).value;
+
+
+    /* =========================
+       CRIAR ITEM
+    ========================= */
+
+    const item = {
+
+        titulo: titulo,
+
+        tipo: tipoSelecionado,
+
+        autor: autor,
+
+        ano: ano,
+
+        genero: genero,
+
+        quantidade: quantidade,
+
+        status: status,
+
+        nota: notaSelecionada,
+
+        favorito: favoritoSelecionado,
+
+        observacoes: observacoes,
+
+        capa: capaSelecionada
+
+    };
+
+
+    /* =========================
+       LIVROS
+    ========================= */
+
+    if (
+        tipoSelecionado === "Livro"
+    ) {
+
+        if (
+            status === "concluido"
+        ) {
+
+            if (
+                modoEdicao &&
+                itemEditando &&
+                itemEditando.leituraNumero
+            ) {
+
+                item.leituraNumero =
+                    itemEditando.leituraNumero;
+
+            } else {
+
+                item.leituraNumero =
+                    descobrirNumeroLeitura();
+
+            }
+
+            item.mesLeitura =
+                formatarMes(
+                    mesLeitura ||
+                    obterMesAtual()
+                );
+
+        } else {
+
+            delete item.leituraNumero;
+
+            delete item.mesLeitura;
+
+        }
+
+    }
+
+
+    /* =========================
+       EDITANDO
+    ========================= */
+
+    if (
+        modoEdicao &&
+        indiceEditando !== null &&
+        acervo[Number(indiceEditando)]
+    ) {
+
+        acervo[
+            Number(indiceEditando)
+        ] = item;
+
+        localStorage.setItem(
+            "acervo",
+            JSON.stringify(acervo)
+        );
+
+        localStorage.removeItem(
+            "itemEditando"
+        );
+
+        mostrarMensagem(
+            "Item atualizado com sucesso! ✨"
+        );
+
+        setTimeout(
+            function() {
+
+                localStorage.setItem(
+                    "itemSelecionado",
+                    Number(indiceEditando)
+                );
+
+                location.href =
+                    "detalhes.html";
+
+            },
+            1000
+        );
+
+        return;
+
+    }
+
+
+    /* =========================
+       NOVO ITEM
+    ========================= */
+
+    acervo.push(item);
+
+    localStorage.setItem(
+        "acervo",
+        JSON.stringify(acervo)
+    );
+
+
+    let mensagem = "";
+
+
+    if (
+        tipoSelecionado === "Livro" &&
+        status === "concluido"
+    ) {
+
+        mensagem =
+            "Leitura #" +
+            item.leituraNumero +
+            " adicionada à Prateleira! 📚❤️";
+
+    } else {
+
+        mensagem =
+            "\"" +
+            titulo +
+            "\" foi adicionado à Prateleira! ✨";
+
+    }
+
+
+    mostrarMensagem(
+        mensagem
+    );
+
+
+    /* =========================
+       LIMPAR FORMULÁRIO
+    ========================= */
+
+    document
+        .querySelector(".formulario")
+        .reset();
+
+    tipoSelecionado = "Livro";
+
+    notaSelecionada = 0;
+
+    favoritoSelecionado = false;
+
+    capaSelecionada = "";
+
+
+    document
+        .querySelectorAll(".tipo")
+        .forEach(function(item) {
+
+            item.classList.remove(
+                "ativo"
+            );
+
+        });
+
+
+    document
+        .querySelector(".tipo")
+        .classList.add(
+            "ativo"
+        );
+
+
+    document
+        .querySelectorAll(".estrela")
+        .forEach(function(estrela) {
+
+            estrela.classList.remove(
+                "selecionada"
+            );
+
+        });
+
+
+    document.getElementById(
+        "switchFavorito"
+    ).classList.remove(
+        "ativo"
+    );
+
+
+    document.getElementById(
+        "leituraArea"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "mesLeitura"
+    ).value =
+        obterMesAtual();
+
+
+    atualizarNumeroLeitura();
+
+    atualizarIconeCapa();
+
+}
+
+
+/* =========================
+   MENSAGEM
+========================= */
+
+function mostrarMensagem(texto) {
+
+    const mensagem =
+        document.getElementById(
+            "mensagem"
+        );
+
+    mensagem.textContent =
+        texto;
+
+    mensagem.style.display =
+        "block";
+
+    window.scrollTo({
+
+        top: document.body.scrollHeight,
+
+        behavior: "smooth"
+
+    });
+
+}
+
+
+/* =========================
+   VOLTAR
+========================= */
+
+function voltar() {
+
+    if (modoEdicao) {
+
+        localStorage.removeItem(
+            "itemEditando"
+        );
+
+    }
+
+    history.back();
+
+}
+
+
+/* =========================
+   PREENCHER EDIÇÃO
+========================= */
+
+function carregarEdicao() {
+
+    if (
+        !modoEdicao ||
+        !itemEditando
+    ) {
+
+        document.getElementById(
+            "mesLeitura"
+        ).value =
+            obterMesAtual();
+
+        atualizarNumeroLeitura();
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "tituloPagina"
+    ).textContent =
+        "Editar item";
+
+
+    document.getElementById(
+        "botaoSalvar"
+    ).textContent =
+        "✓  Salvar alterações";
+
+
+    tipoSelecionado =
+        itemEditando.tipo ||
+        "Livro";
+
+
+    /* TIPO */
+
+    document
+        .querySelectorAll(".tipo")
+        .forEach(function(botao) {
+
+            botao.classList.remove(
+                "ativo"
+            );
+
+            const texto =
+                botao.textContent.trim();
+
+            if (
+                texto.includes(
+                    tipoSelecionado
+                )
+            ) {
+
+                botao.classList.add(
+                    "ativo"
+                );
+
+            }
+
+        });
+
+
+    /* CAMPOS */
+
+    document.getElementById(
+        "titulo"
+    ).value =
+        itemEditando.titulo || "";
+
+
+    document.getElementById(
+        "autor"
+    ).value =
+        itemEditando.autor || "";
+
+
+    document.getElementById(
+        "ano"
+    ).value =
+        itemEditando.ano || "";
+
+
+    document.getElementById(
+        "genero"
+    ).value =
+        itemEditando.genero || "";
+
+
+    document.getElementById(
+        "quantidade"
+    ).value =
+        itemEditando.quantidade || "";
+
+
+    document.getElementById(
+        "status"
+    ).value =
+        itemEditando.status || "quero";
+
+
+    document.getElementById(
+        "observacoes"
+    ).value =
+        itemEditando.observacoes || "";
+
+
+    /* MÊS DA LEITURA */
+
+    if (
+        tipoSelecionado === "Livro"
+    ) {
+
+        document.getElementById(
+            "mesLeitura"
+        ).value =
+            converterMesParaInput(
+                itemEditando.mesLeitura
+            );
+
+        if (
+            !document.getElementById(
+                "mesLeitura"
+            ).value
+        ) {
+
+            document.getElementById(
+                "mesLeitura"
+            ).value =
+                obterMesAtual();
+
+        }
+
+    }
+
+
+    /* NOTA */
+
+    notaSelecionada =
+        Number(
+            itemEditando.nota
+        ) || 0;
+
+    if (
+        notaSelecionada > 0
+    ) {
+
+        avaliar(
+            notaSelecionada
+        );
+
+    }
+
+
+    /* FAVORITO */
+
+    favoritoSelecionado =
+        itemEditando.favorito === true;
+
+    document.getElementById(
+        "switchFavorito"
+    ).classList.toggle(
+        "ativo",
+        favoritoSelecionado
+    );
+
+
+    /* CAPA */
+
+    if (
+        itemEditando.capa
+    ) {
+
+        capaSelecionada =
+            itemEditando.capa;
+
+        const preview =
+            document.getElementById(
+                "capaPreview"
+            );
+
+        preview.innerHTML = "";
+
+        const imagem =
+            document.createElement(
+                "img"
+            );
+
+        imagem.src =
+            capaSelecionada;
+
+        imagem.alt =
+            "Capa";
+
+        preview.appendChild(
+            imagem
+        );
+
+    }
+
+
+    /* ATUALIZAR TIPO */
+
+    const botaoTipo =
+        document.querySelector(
+            ".tipo.ativo"
+        );
+
+    selecionarTipo(
+        tipoSelecionado,
+        botaoTipo
+    );
+
+    atualizarNumeroLeitura();
+
+}
+
+
+/* =========================
+   INICIAR
+========================= */
+
+aplicarModo();
+
+carregarEdicao();
+
+</script>
+
+</body>
+
+</html>

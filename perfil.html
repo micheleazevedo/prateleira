@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Perfil - Prateleira</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f9fa;
+            color: #092d3d;
+            transition: background 0.2s, color 0.2s;
+        }
+
+
+        .app {
+            max-width: 430px;
+            margin: auto;
+            min-height: 100vh;
+            padding-bottom: 90px;
+        }
+
+
+        /* =========================
+           TOPO
+        ========================= */
+
+        .topo {
+            padding: 25px 20px 20px;
+        }
+
+
+        .topo h1 {
+            font-size: 25px;
+            margin-bottom: 5px;
+        }
+
+
+        .subtitulo {
+            color: #71808a;
+            font-size: 11px;
+        }
+
+
+        /* =========================
+           PERFIL
+        ========================= */
+
+        .perfil {
+            margin: 0 20px 18px;
+            background: white;
+            border: 1px solid #dce4e8;
+            border-radius: 18px;
+            padding: 22px;
+            text-align: center;
+        }
+
+
+        .avatar {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 12px;
+            border-radius: 50%;
+            background: #e8f2f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+
+        .perfil h2 {
+            font-size: 17px;
+            margin-bottom: 5px;
+        }
+
+
+        .perfil p {
+            color: #71808a;
+            font-size: 10px;
+        }
+
+
+        /* =========================
+           ESTATÍSTICAS
+        ========================= */
+
+        .estatisticas {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+
+        .estatistica {
+            background: #f7f9fa;
+            border-radius: 12px;
+            padding: 12px 5px;
+        }
+
+
+        .estatistica strong {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+
+
+        .estatistica span {
+            color: #71808a;
+            font-size: 8px;
+        }
+
+
+        /* =========================
+           SEÇÕES
+        ========================= */
+
+        .secao {
+            margin: 0 20px 18px;
+        }
+
+
+        .titulo-secao {
+            font-size: 11px;
+            font-weight: bold;
+            color: #71808a;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            padding-left: 3px;
+        }
+
+
+        .caixa {
+            background: white;
+            border: 1px solid #dce4e8;
+            border-radius: 17px;
+            overflow: hidden;
+        }
+
+
+        /* =========================
+           OPÇÕES
+        ========================= */
+
+        .opcao {
+            width: 100%;
+            min-height: 58px;
+            border: none;
+            border-bottom: 1px solid #edf1f2;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 15px;
+            color: #092d3d;
+            cursor: pointer;
+            text-align: left;
+        }
+
+
+        .opcao:last-child {
+            border-bottom: none;
+        }
+
+
+        .opcao-esquerda {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+
+        .icone-opcao {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: #eef3f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+
+        .opcao-texto strong {
+            display: block;
+            font-size: 11px;
+            margin-bottom: 3px;
+        }
+
+
+        .opcao-texto span {
+            display: block;
+            color: #71808a;
+            font-size: 8px;
+        }
+
+
+        .seta {
+            color: #9aa8ad;
+            font-size: 17px;
+        }
+
+
+        /* =========================
+           TEMA
+        ========================= */
+
+        .tema-opcoes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            padding: 12px;
+        }
+
+
+        .tema {
+            border: 1px solid #dce4e8;
+            background: #f7f9fa;
+            border-radius: 13px;
+            padding: 13px 10px;
+            cursor: pointer;
+            text-align: center;
+            color: #092d3d;
+        }
+
+
+        .tema span {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 6px;
+        }
+
+
+        .tema strong {
+            display: block;
+            font-size: 10px;
+        }
+
+
+        .tema small {
+            display: block;
+            color: #71808a;
+            font-size: 8px;
+            margin-top: 3px;
+        }
+
+
+        .tema.ativo {
+            border-color: #0b4353;
+            background: #eef5f4;
+        }
+
+
+        /* =========================
+           SOBRE
+        ========================= */
+
+        .sobre {
+            padding: 16px;
+        }
+
+
+        .sobre strong {
+            display: block;
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+
+
+        .sobre p {
+            color: #71808a;
+            font-size: 9px;
+            line-height: 1.5;
+        }
+
+
+        .versao {
+            margin-top: 10px;
+            font-size: 8px !important;
+        }
+
+
+        /* =========================
+           MENU INFERIOR
+        ========================= */
+
+        .menu {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(430px, 100%);
+            height: 70px;
+            background: white;
+            border-top: 1px solid #dce4e8;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            z-index: 10;
+        }
+
+
+        .menu button {
+            border: none;
+            background: transparent;
+            color: #71808a;
+            font-size: 9px;
+            cursor: pointer;
+        }
+
+
+        .menu button span {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
+
+        .menu button.ativo {
+            color: #0b4353;
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           MODO ESCURO
+        ========================= */
+
+        body.modo-escuro {
+            background: #10191d;
+            color: #e8f0f2;
+        }
+
+
+        body.modo-escuro .contador,
+        body.modo-escuro .subtitulo,
+        body.modo-escuro .perfil p,
+        body.modo-escuro .titulo-secao,
+        body.modo-escuro .opcao-texto span,
+        body.modo-escuro .sobre p,
+        body.modo-escuro .tema small {
+            color: #9eafb4;
+        }
+
+
+        body.modo-escuro .perfil,
+        body.modo-escuro .caixa {
+            background: #18262b;
+            border-color: #304249;
+        }
+
+
+        body.modo-escuro .avatar {
+            background: #203338;
+        }
+
+
+        body.modo-escuro .estatistica {
+            background: #203338;
+        }
+
+
+        body.modo-escuro .opcao {
+            color: #e8f0f2;
+            border-color: #2b3b40;
+        }
+
+
+        body.modo-escuro .icone-opcao {
+            background: #25363b;
+        }
+
+
+        body.modo-escuro .tema {
+            background: #203338;
+            border-color: #304249;
+            color: #e8f0f2;
+        }
+
+
+        body.modo-escuro .tema.ativo {
+            background: #294047;
+            border-color: #76aeb8;
+        }
+
+
+        body.modo-escuro .menu {
+            background: #18262b;
+            border-color: #304249;
+        }
+
+
+        body.modo-escuro .menu button.ativo {
+            color: #8fc0ca;
+        }
+
+
+        /* =========================
+           RESPONSIVO
+        ========================= */
+
+        @media (max-width: 350px) {
+
+            .perfil {
+                padding: 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- TOPO -->
+
+    <header class="topo">
+
+        <h1>
+            Perfil
+        </h1>
+
+        <div class="subtitulo">
+            Personalize sua experiência na Prateleira.
+        </div>
+
+    </header>
+
+
+    <!-- PERFIL -->
+
+    <section class="perfil">
+
+        <div class="avatar">
+            👤
+        </div>
+
+
+        <h2>
+            Minha Prateleira
+        </h2>
+
+
+        <p>
+            Seu espaço para livros, filmes e séries.
+        </p>
+
+
+        <div class="estatisticas">
+
+
+            <div class="estatistica">
+
+                <strong id="totalItens">
+                    0
+                </strong>
+
+                <span>
+                    Itens
+                </span>
+
+            </div>
+
+
+            <div class="estatistica">
+
+                <strong id="totalLivros">
+                    0
+                </strong>
+
+                <span>
+                    Livros
+                </span>
+
+            </div>
+
+
+            <div class="estatistica">
+
+                <strong id="totalFavoritos">
+                    0
+                </strong>
+
+                <span>
+                    Favoritos
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- APARÊNCIA -->
+
+    <section class="secao">
+
+        <div class="titulo-secao">
+            Aparência
+        </div>
+
+
+        <div class="caixa">
+
+
+            <div class="tema-opcoes">
+
+
+                <button
+                    class="tema"
+                    id="temaClaro"
+                    onclick="selecionarTema('claro')"
+                >
+
+                    <span>
+                        ☀️
+                    </span>
+
+                    <strong>
+                        Claro
+                    </strong>
+
+                    <small>
+                        Visual claro
+                    </small>
+
+                </button>
+
+
+                <button
+                    class="tema"
+                    id="temaEscuro"
+                    onclick="selecionarTema('escuro')"
+                >
+
+                    <span>
+                        🌙
+                    </span>
+
+                    <strong>
+                        Escuro
+                    </strong>
+
+                    <small>
+                        Modo noturno
+                    </small>
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- CONFIGURAÇÕES -->
+
+    <section class="secao">
+
+        <div class="titulo-secao">
+            Configurações
+        </div>
+
+
+        <div class="caixa">
+
+
+            <button
+                class="opcao"
+                onclick="abrirBiblioteca()"
+            >
+
+                <div class="opcao-esquerda">
+
+                    <div class="icone-opcao">
+                        📚
+                    </div>
+
+                    <div class="opcao-texto">
+
+                        <strong>
+                            Minha biblioteca
+                        </strong>
+
+                        <span>
+                            Visualizar todos os itens
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="seta">
+                    ›
+                </div>
+
+            </button>
+
+
+            <button
+                class="opcao"
+                onclick="abrirEstatisticas()"
+            >
+
+                <div class="opcao-esquerda">
+
+                    <div class="icone-opcao">
+                        📊
+                    </div>
+
+                    <div class="opcao-texto">
+
+                        <strong>
+                            Estatísticas
+                        </strong>
+
+                        <span>
+                            Veja seus hábitos de leitura e entretenimento
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="seta">
+                    ›
+                </div>
+
+            </button>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- SOBRE -->
+
+    <section class="secao">
+
+        <div class="titulo-secao">
+            Sobre
+        </div>
+
+
+        <div class="caixa sobre">
+
+            <strong>
+                Prateleira
+            </strong>
+
+
+            <p>
+                Um espaço pessoal para organizar
+                tudo o que você lê, assiste e quer conhecer.
+            </p>
+
+
+            <p class="versao">
+                Versão 1.0
+            </p>
+
+        </div>
+
+    </section>
+
+
+</div>
+
+
+<!-- MENU -->
+
+<nav class="menu">
+
+
+    <button
+        onclick="location.href='index.html'"
+    >
+
+        <span>
+            🏠
+        </span>
+
+        Início
+
+    </button>
+
+
+    <button
+        onclick="location.href='biblioteca.html'"
+    >
+
+        <span>
+            📚
+        </span>
+
+        Biblioteca
+
+    </button>
+
+
+    <button
+        onclick="location.href='novo.html'"
+    >
+
+        <span>
+            ＋
+        </span>
+
+        Adicionar
+
+    </button>
+
+
+    <button
+        onclick="location.href='estatisticas.html'"
+    >
+
+        <span>
+            📊
+        </span>
+
+        Stats
+
+    </button>
+
+
+    <button
+        class="ativo"
+        onclick="location.href='perfil.html'"
+    >
+
+        <span>
+            👤
+        </span>
+
+        Perfil
+
+    </button>
+
+
+</nav>
+
+
+<script>
+
+
+/* =========================
+   TEMA GLOBAL
+========================= */
+
+
+function aplicarModo() {
+
+
+    const modo =
+        localStorage.getItem(
+            "modoPrateleira"
+        ) || "claro";
+
+
+    if (
+        modo === "escuro"
+    ) {
+
+        document.body.classList.add(
+            "modo-escuro"
+        );
+
+    } else {
+
+        document.body.classList.remove(
+            "modo-escuro"
+        );
+
+    }
+
+
+    atualizarBotoesTema();
+
+}
+
+
+/* =========================
+   SELECIONAR TEMA
+========================= */
+
+
+function selecionarTema(
+    modo
+) {
+
+
+    localStorage.setItem(
+        "modoPrateleira",
+        modo
+    );
+
+
+    aplicarModo();
+
+}
+
+
+/* =========================
+   BOTÕES DO TEMA
+========================= */
+
+
+function atualizarBotoesTema() {
+
+
+    const modo =
+        localStorage.getItem(
+            "modoPrateleira"
+        ) || "claro";
+
+
+    const claro =
+        document.getElementById(
+            "temaClaro"
+        );
+
+
+    const escuro =
+        document.getElementById(
+            "temaEscuro"
+        );
+
+
+    claro.classList.remove(
+        "ativo"
+    );
+
+
+    escuro.classList.remove(
+        "ativo"
+    );
+
+
+    if (
+        modo === "escuro"
+    ) {
+
+        escuro.classList.add(
+            "ativo"
+        );
+
+    } else {
+
+        claro.classList.add(
+            "ativo"
+        );
+
+    }
+
+}
+
+
+/* =========================
+   ESTATÍSTICAS DO PERFIL
+========================= */
+
+
+function carregarEstatisticas() {
+
+
+    let acervo = [];
+
+
+    try {
+
+        acervo =
+            JSON.parse(
+                localStorage.getItem(
+                    "acervo"
+                )
+            ) || [];
+
+    } catch (erro) {
+
+        acervo = [];
+
+    }
+
+
+    const livros =
+        acervo.filter(
+            function(item) {
+
+                return item.tipo === "Livro";
+
+            }
+        );
+
+
+    const favoritos =
+        acervo.filter(
+            function(item) {
+
+                return item.favorito === true;
+
+            }
+        );
+
+
+    document.getElementById(
+        "totalItens"
+    ).textContent =
+        acervo.length;
+
+
+    document.getElementById(
+        "totalLivros"
+    ).textContent =
+        livros.length;
+
+
+    document.getElementById(
+        "totalFavoritos"
+    ).textContent =
+        favoritos.length;
+
+}
+
+
+/* =========================
+   NAVEGAÇÃO
+========================= */
+
+
+function abrirBiblioteca() {
+
+    location.href =
+        "biblioteca.html";
+
+}
+
+
+function abrirEstatisticas() {
+
+    location.href =
+        "estatisticas.html";
+
+}
+
+
+/* =========================
+   INICIAR
+========================= */
+
+
+aplicarModo();
+
+carregarEstatisticas();
+
+
+</script>
+
+
+</body>
+
+</html>

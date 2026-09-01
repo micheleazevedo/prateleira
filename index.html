@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Prateleira</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f9fa;
+            color: #092d3d;
+            transition: background 0.3s, color 0.3s;
+        }
+
+
+        .app {
+            max-width: 430px;
+            margin: auto;
+            min-height: 100vh;
+            padding-bottom: 100px;
+        }
+
+
+        /* =========================
+           TOPO
+           ========================= */
+
+        .topo {
+            padding: 25px 20px 15px;
+        }
+
+
+        .saudacao {
+            color: #71808a;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+
+        .topo h1 {
+            font-size: 27px;
+        }
+
+
+        /* =========================
+           RESUMO
+           ========================= */
+
+        .resumo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 5px 20px 20px;
+        }
+
+
+        .card {
+            background: white;
+            border: 1px solid #dce4e8;
+            border-radius: 17px;
+            padding: 16px;
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+
+        .card-icone {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+
+        .card-numero {
+            display: block;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+
+        .card-texto {
+            color: #71808a;
+            font-size: 10px;
+        }
+
+
+        /* =========================
+           BOTÃO
+           ========================= */
+
+        .botao-adicionar {
+            margin: 0 20px 23px;
+            width: calc(100% - 40px);
+            border: none;
+            border-radius: 16px;
+            background: #0b4353;
+            color: white;
+            padding: 15px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           TÍTULOS
+           ========================= */
+
+        .titulo-secao {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 20px 10px;
+        }
+
+
+        .titulo-secao strong {
+            font-size: 14px;
+        }
+
+
+        .ver-todos {
+            border: none;
+            background: transparent;
+            color: #0b4353;
+            font-size: 10px;
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           CATEGORIAS
+           ========================= */
+
+        .categorias {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 9px;
+            margin: 0 20px 23px;
+        }
+
+
+        .categoria {
+            background: white;
+            border: 1px solid #dce4e8;
+            border-radius: 15px;
+            padding: 14px 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+
+        .categoria span {
+            display: block;
+            font-size: 23px;
+            margin-bottom: 7px;
+        }
+
+
+        .categoria strong {
+            display: block;
+            font-size: 11px;
+            margin-bottom: 3px;
+        }
+
+
+        .categoria small {
+            color: #71808a;
+            font-size: 9px;
+        }
+
+
+        /* =========================
+           RECENTES
+           ========================= */
+
+        .recentes {
+            margin: 0 20px;
+        }
+
+
+        .item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: white;
+            border: 1px solid #dce4e8;
+            border-radius: 15px;
+            padding: 10px;
+            margin-bottom: 9px;
+            cursor: pointer;
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+
+        .capa {
+            width: 48px;
+            height: 65px;
+            border-radius: 8px;
+            background: #e8f2f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+            font-size: 23px;
+        }
+
+
+        .capa img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+
+        .item-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+
+        .item-titulo {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+
+        .item-tipo {
+            color: #71808a;
+            font-size: 9px;
+            margin-bottom: 5px;
+        }
+
+
+        .item-leitura {
+            color: #0b4353;
+            font-size: 9px;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+
+
+        .item-estrelas {
+            color: #eca72c;
+            font-size: 12px;
+        }
+
+
+        .vazio {
+            background: white;
+            border: 1px dashed #dce4e8;
+            border-radius: 16px;
+            padding: 28px 15px;
+            text-align: center;
+            color: #71808a;
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+
+        .vazio span {
+            display: block;
+            font-size: 35px;
+            margin-bottom: 8px;
+        }
+
+
+        .vazio p {
+            font-size: 11px;
+            margin-bottom: 12px;
+        }
+
+
+        .vazio button {
+            border: none;
+            background: #0b4353;
+            color: white;
+            border-radius: 12px;
+            padding: 10px 15px;
+            font-size: 10px;
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           NAVEGAÇÃO
+           ========================= */
+
+        .navegacao {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            background: white;
+            border-top: 1px solid #dce4e8;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            padding: 9px 5px 8px;
+            z-index: 100;
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+
+        .nav-item {
+            border: none;
+            background: transparent;
+            color: #71808a;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+
+        .nav-item span {
+            font-size: 20px;
+        }
+
+
+        .nav-item small {
+            font-size: 9px;
+        }
+
+
+        .nav-item.ativo {
+            color: #0b4353;
+            font-weight: bold;
+        }
+
+
+        .nav-item.adicionar span {
+            width: 42px;
+            height: 42px;
+            margin-top: -25px;
+            border-radius: 50%;
+            background: #0b4353;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+
+        .nav-item.adicionar small {
+            margin-top: 2px;
+        }
+
+
+        /* =========================
+           MODO ESCURO
+           ========================= */
+
+        body.modo-escuro {
+            background: #10191d;
+            color: #e8eeee;
+        }
+
+
+        body.modo-escuro .card,
+        body.modo-escuro .categoria,
+        body.modo-escuro .item,
+        body.modo-escuro .vazio,
+        body.modo-escuro .navegacao {
+            background: #18262b;
+            border-color: #2a3b41;
+        }
+
+
+        body.modo-escuro .saudacao,
+        body.modo-escuro .card-texto,
+        body.modo-escuro .categoria small,
+        body.modo-escuro .item-tipo,
+        body.modo-escuro .vazio {
+            color: #9eafb5;
+        }
+
+
+        body.modo-escuro .ver-todos,
+        body.modo-escuro .item-leitura {
+            color: #7fc1c9;
+        }
+
+
+        body.modo-escuro .categoria strong,
+        body.modo-escuro .item-titulo,
+        body.modo-escuro .card-numero,
+        body.modo-escuro .titulo-secao strong {
+            color: #e8eeee;
+        }
+
+
+        body.modo-escuro .capa {
+            background: #24363c;
+        }
+
+
+        body.modo-escuro .nav-item.ativo {
+            color: #7fc1c9;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- =========================
+         TOPO
+         ========================= -->
+
+    <header class="topo">
+
+        <div class="saudacao">
+            Bem-vinda à sua
+        </div>
+
+        <h1>
+            Prateleira
+        </h1>
+
+    </header>
+
+
+    <!-- =========================
+         RESUMO
+         ========================= -->
+
+    <section class="resumo">
+
+
+        <div class="card">
+
+            <div class="card-icone">
+                📚
+            </div>
+
+            <span
+                class="card-numero"
+                id="total"
+            >
+                0
+            </span>
+
+            <span class="card-texto">
+                Itens na Prateleira
+            </span>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icone">
+                ❤️
+            </div>
+
+            <span
+                class="card-numero"
+                id="favoritos"
+            >
+                0
+            </span>
+
+            <span class="card-texto">
+                Favoritos
+            </span>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =========================
+         ADICIONAR
+         ========================= -->
+
+    <button
+        class="botao-adicionar"
+        onclick="location.href='novo.html'"
+    >
+        + &nbsp; Adicionar novo item
+    </button>
+
+
+    <!-- =========================
+         CATEGORIAS
+         ========================= -->
+
+    <div class="titulo-secao">
+
+        <strong>
+            Minha Prateleira
+        </strong>
+
+        <button
+            class="ver-todos"
+            onclick="location.href='biblioteca.html'"
+        >
+            Ver todos →
+        </button>
+
+    </div>
+
+
+    <div class="categorias">
+
+
+        <div
+            class="categoria"
+            onclick="abrirBiblioteca('Livro')"
+        >
+
+            <span>
+                📖
+            </span>
+
+            <strong>
+                Livros
+            </strong>
+
+            <small id="livros">
+                0 itens
+            </small>
+
+        </div>
+
+
+        <div
+            class="categoria"
+            onclick="abrirBiblioteca('Filme')"
+        >
+
+            <span>
+                🎬
+            </span>
+
+            <strong>
+                Filmes
+            </strong>
+
+            <small id="filmes">
+                0 itens
+            </small>
+
+        </div>
+
+
+        <div
+            class="categoria"
+            onclick="abrirBiblioteca('Série')"
+        >
+
+            <span>
+                📺
+            </span>
+
+            <strong>
+                Séries
+            </strong>
+
+            <small id="series">
+                0 itens
+            </small>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================
+         RECENTES
+         ========================= -->
+
+    <div class="titulo-secao">
+
+        <strong>
+            Adicionados recentemente
+        </strong>
+
+        <button
+            class="ver-todos"
+            onclick="location.href='biblioteca.html'"
+        >
+            Ver todos →
+        </button>
+
+    </div>
+
+
+    <div
+        class="recentes"
+        id="recentes"
+    >
+
+    </div>
+
+
+</div>
+
+
+<!-- =========================
+     NAVEGAÇÃO
+     ========================= -->
+
+<nav class="navegacao">
+
+
+    <button
+        class="nav-item ativo"
+    >
+
+        <span>
+            ⌂
+        </span>
+
+        <small>
+            Início
+        </small>
+
+    </button>
+
+
+    <button
+        class="nav-item"
+        onclick="location.href='biblioteca.html'"
+    >
+
+        <span>
+            📚
+        </span>
+
+        <small>
+            Biblioteca
+        </small>
+
+    </button>
+
+
+    <button
+        class="nav-item adicionar"
+        onclick="location.href='novo.html'"
+    >
+
+        <span>
+            +
+        </span>
+
+        <small>
+            Adicionar
+        </small>
+
+    </button>
+
+
+    <button
+        class="nav-item"
+        onclick="location.href='estatisticas.html'"
+    >
+
+        <span>
+            📊
+        </span>
+
+        <small>
+            Estatísticas
+        </small>
+
+    </button>
+
+
+    <button
+        class="nav-item"
+        onclick="location.href='perfil.html'"
+    >
+
+        <span>
+            👤
+        </span>
+
+        <small>
+            Perfil
+        </small>
+
+    </button>
+
+
+</nav>
+
+
+<script>
+
+
+/* =========================
+   MODO GLOBAL
+   =========================
+
+   O modo é escolhido somente
+   na página Perfil.
+
+   Esta página apenas lê a
+   preferência salva.
+   ========================= */
+
+function aplicarModo() {
+
+    const modo =
+        localStorage.getItem("modoPrateleira") || "claro";
+
+
+    if (modo === "escuro") {
+
+        document.body.classList.add("modo-escuro");
+
+    } else {
+
+        document.body.classList.remove("modo-escuro");
+
+    }
+
+}
+
+
+aplicarModo();
+
+
+/* =========================
+   ACERVO
+   ========================= */
+
+let acervo = [];
+
+
+try {
+
+    acervo =
+        JSON.parse(
+            localStorage.getItem("acervo")
+        ) || [];
+
+} catch (erro) {
+
+    console.error(
+        "Erro ao carregar a Prateleira:",
+        erro
+    );
+
+    acervo = [];
+
+}
+
+
+/* =========================
+   CONTADORES
+   ========================= */
+
+let livros = 0;
+
+let filmes = 0;
+
+let series = 0;
+
+let favoritos = 0;
+
+
+/* =========================
+   CONTAR
+   ========================= */
+
+acervo.forEach(function(item) {
+
+
+    if (item.tipo === "Livro") {
+
+        livros++;
+
+    }
+
+
+    if (item.tipo === "Filme") {
+
+        filmes++;
+
+    }
+
+
+    if (item.tipo === "Série") {
+
+        series++;
+
+    }
+
+
+    if (item.favorito === true) {
+
+        favoritos++;
+
+    }
+
+});
+
+
+/* =========================
+   MOSTRAR
+   ========================= */
+
+document.getElementById(
+    "total"
+).textContent =
+    acervo.length;
+
+
+document.getElementById(
+    "favoritos"
+).textContent =
+    favoritos;
+
+
+document.getElementById(
+    "livros"
+).textContent =
+    livros +
+    (livros === 1 ? " item" : " itens");
+
+
+document.getElementById(
+    "filmes"
+).textContent =
+    filmes +
+    (filmes === 1 ? " item" : " itens");
+
+
+document.getElementById(
+    "series"
+).textContent =
+    series +
+    (series === 1 ? " item" : " itens");
+
+
+/* =========================
+   RECENTES
+   ========================= */
+
+const recentes =
+    document.getElementById(
+        "recentes"
+    );
+
+
+if (acervo.length === 0) {
+
+
+    recentes.innerHTML = `
+
+        <div class="vazio">
+
+            <span>
+                📚
+            </span>
+
+            <p>
+                Sua Prateleira ainda está vazia.
+                <br>
+                Comece adicionando seu primeiro item!
+            </p>
+
+            <button
+                onclick="location.href='novo.html'"
+            >
+                Adicionar primeiro item
+            </button>
+
+        </div>
+
+    `;
+
+
+} else {
+
+
+    /*
+        Mostra os últimos 5 itens.
+        O mais recente aparece primeiro.
+    */
+
+    const ultimos =
+        acervo
+            .slice()
+            .reverse()
+            .slice(0, 5);
+
+
+    ultimos.forEach(function(item) {
+
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+
+        div.className =
+            "item";
+
+
+        div.onclick =
+            function() {
+
+
+                const indice =
+                    acervo.indexOf(item);
+
+
+                localStorage.setItem(
+                    "itemSelecionado",
+                    indice
+                );
+
+
+                location.href =
+                    "detalhes.html";
+
+            };
+
+
+        /* =========================
+           ÍCONE
+           ========================= */
+
+        let icone =
+            "📚";
+
+
+        if (
+            item.tipo === "Filme"
+        ) {
+
+            icone =
+                "🎬";
+
+        }
+
+
+        if (
+            item.tipo === "Série"
+        ) {
+
+            icone =
+                "📺";
+
+        }
+
+
+        /* =========================
+           CAPA
+           ========================= */
+
+        const capa =
+            document.createElement(
+                "div"
+            );
+
+
+        capa.className =
+            "capa";
+
+
+        if (item.capa) {
+
+
+            const img =
+                document.createElement(
+                    "img"
+                );
+
+
+            img.src =
+                item.capa;
+
+
+            img.alt =
+                "Capa";
+
+
+            capa.appendChild(
+                img
+            );
+
+
+        } else {
+
+
+            const span =
+                document.createElement(
+                    "span"
+                );
+
+
+            span.textContent =
+                icone;
+
+
+            capa.appendChild(
+                span
+            );
+
+        }
+
+
+        /* =========================
+           INFORMAÇÕES
+           ========================= */
+
+        const info =
+            document.createElement(
+                "div"
+            );
+
+
+        info.className =
+            "item-info";
+
+
+        const titulo =
+            document.createElement(
+                "div"
+            );
+
+
+        titulo.className =
+            "item-titulo";
+
+
+        titulo.textContent =
+            item.titulo ||
+            "Sem título";
+
+
+        info.appendChild(
+            titulo
+        );
+
+
+        const tipo =
+            document.createElement(
+                "div"
+            );
+
+
+        tipo.className =
+            "item-tipo";
+
+
+        tipo.textContent =
+            item.tipo ||
+            "Item";
+
+
+        info.appendChild(
+            tipo
+        );
+
+
+        /* =========================
+           LEITURA
+           ========================= */
+
+        if (
+            item.tipo === "Livro"
+        ) {
+
+
+            const numeroLeitura =
+                item.leituraNumero ||
+                item.leitura ||
+                item.numeroLeitura;
+
+
+            let textoLeitura =
+                "";
+
+
+            if (numeroLeitura) {
+
+                textoLeitura =
+                    "Leitura #" +
+                    numeroLeitura;
+
+            }
+
+
+            if (item.mesLeitura) {
+
+
+                if (textoLeitura) {
+
+                    textoLeitura +=
+                        " • " +
+                        item.mesLeitura;
+
+                } else {
+
+                    textoLeitura =
+                        item.mesLeitura;
+
+                }
+
+            }
+
+
+            if (textoLeitura) {
+
+
+                const leitura =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                leitura.className =
+                    "item-leitura";
+
+
+                leitura.textContent =
+                    textoLeitura;
+
+
+                info.appendChild(
+                    leitura
+                );
+
+            }
+
+        }
+
+
+        /* =========================
+           ESTRELAS
+           ========================= */
+
+        const estrelas =
+            document.createElement(
+                "div"
+            );
+
+
+        estrelas.className =
+            "item-estrelas";
+
+
+        const nota =
+            Number(item.nota) || 0;
+
+
+        if (nota > 0) {
+
+            estrelas.textContent =
+                "★".repeat(nota) +
+                "☆".repeat(5 - nota);
+
+        }
+
+
+        info.appendChild(
+            estrelas
+        );
+
+
+        /* =========================
+           MONTAR ITEM
+           ========================= */
+
+        div.appendChild(
+            capa
+        );
+
+
+        div.appendChild(
+            info
+        );
+
+
+        recentes.appendChild(
+            div
+        );
+
+    });
+
+}
+
+
+/* =========================
+   ABRIR BIBLIOTECA
+   ========================= */
+
+function abrirBiblioteca(tipo) {
+
+
+    localStorage.setItem(
+        "filtroBiblioteca",
+        tipo
+    );
+
+
+    location.href =
+        "biblioteca.html";
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>

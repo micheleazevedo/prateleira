@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Biblioteca - Acervo</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f9fa;
+            color: #092d3d;
+        }
+
+
+        .app {
+            max-width: 430px;
+            margin: auto;
+            min-height: 100vh;
+            padding-bottom: 90px;
+        }
+
+
+        /* TOPO */
+
+        .topo {
+            padding: 28px 20px 20px;
+        }
+
+
+        .topo h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+
+        .topo p {
+            font-size: 13px;
+            color: #71808a;
+        }
+
+
+        /* FILTROS */
+
+        .filtros {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 0 20px 20px;
+        }
+
+
+        .filtros::-webkit-scrollbar {
+            display: none;
+        }
+
+
+        .filtro {
+            border: 1px solid #dce4e8;
+            background: white;
+            color: #71808a;
+            border-radius: 20px;
+            padding: 9px 14px;
+            font-size: 11px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+
+        .filtro.ativo {
+            background: #0b4353;
+            color: white;
+            border-color: #0b4353;
+        }
+
+
+        /* CONTADOR */
+
+        .cabecalho-lista {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 20px 12px;
+        }
+
+
+        .cabecalho-lista h2 {
+            font-size: 17px;
+        }
+
+
+        .contador {
+            font-size: 11px;
+            color: #71808a;
+        }
+
+
+        /* LISTA */
+
+        .lista {
+            margin: 0 20px;
+        }
+
+
+        .item {
+            background: white;
+            border: 1px solid #dce4e8;
+            border-radius: 17px;
+            padding: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+
+        .item-icone {
+            width: 56px;
+            height: 56px;
+            border-radius: 15px;
+            background: #e8f2f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 27px;
+            flex-shrink: 0;
+        }
+
+
+        .item-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+
+        .item-titulo {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+
+        .item-autor {
+            font-size: 11px;
+            color: #71808a;
+            margin-bottom: 7px;
+        }
+
+
+        .detalhes {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+
+        .tag {
+            background: #f1f4f5;
+            color: #71808a;
+            border-radius: 8px;
+            padding: 4px 7px;
+            font-size: 9px;
+        }
+
+
+        .estrelas {
+            color: #eca72c;
+            font-size: 11px;
+        }
+
+
+        .coracao {
+            font-size: 13px;
+        }
+
+
+        /* VAZIO */
+
+        .vazio {
+            background: white;
+            border: 1px dashed #cbd6da;
+            border-radius: 18px;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+
+        .vazio-icone {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+
+        .vazio h3 {
+            font-size: 15px;
+            margin-bottom: 7px;
+        }
+
+
+        .vazio p {
+            color: #71808a;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+
+        .botao-vazio {
+            margin-top: 18px;
+            border: none;
+            background: #0b4353;
+            color: white;
+            border-radius: 14px;
+            padding: 12px 18px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+
+        /* NAVEGAÇÃO */
+
+        .navegacao {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            background: white;
+            border-top: 1px solid #dce4e8;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            padding: 9px 5px 8px;
+            z-index: 100;
+        }
+
+
+        .nav-item {
+            border: none;
+            background: transparent;
+            color: #71808a;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+
+        .nav-item span {
+            font-size: 20px;
+        }
+
+
+        .nav-item small {
+            font-size: 9px;
+        }
+
+
+        .nav-item.ativo {
+            color: #0b4353;
+            font-weight: bold;
+        }
+
+
+        /* BOTÃO CENTRAL */
+
+        .nav-item.adicionar span {
+            width: 42px;
+            height: 42px;
+            margin-top: -25px;
+            border-radius: 50%;
+            background: #0b4353;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+
+        .nav-item.adicionar small {
+            margin-top: 2px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- TOPO -->
+
+    <header class="topo">
+
+        <h1>
+            Biblioteca
+        </h1>
+
+        <p>
+            Tudo o que faz parte do seu Acervo.
+        </p>
+
+    </header>
+
+
+    <!-- FILTROS -->
+
+    <div class="filtros">
+
+        <button
+            class="filtro ativo"
+            onclick="filtrar('Todos', this)"
+        >
+            Todos
+        </button>
+
+
+        <button
+            class="filtro"
+            onclick="filtrar('Livro', this)"
+        >
+            📖 Livros
+        </button>
+
+
+        <button
+            class="filtro"
+            onclick="filtrar('Filme', this)"
+        >
+            🎬 Filmes
+        </button>
+
+
+        <button
+            class="filtro"
+            onclick="filtrar('Série', this)"
+        >
+            📺 Séries
+        </button>
+
+    </div>
+
+
+    <!-- CABEÇALHO -->
+
+    <div class="cabecalho-lista">
+
+        <h2 id="tituloLista">
+            Todos
+        </h2>
+
+        <span
+            class="contador"
+            id="contador"
+        >
+            0 itens
+        </span>
+
+    </div>
+
+
+    <!-- LISTA -->
+
+    <div
+        class="lista"
+        id="lista"
+    ></div>
+
+
+</div>
+
+
+<!-- NAVEGAÇÃO -->
+
+<nav class="navegacao">
+
+
+    <button
+        class="nav-item"
+        onclick="location.href='index.html'"
+    >
+
+        <span>
+            ⌂
+        </span>
+
+        <small>
+            Início
+        </small>
+
+    </button>
+
+
+    <button
+        class="nav-item ativo"
+        onclick="location.href='biblioteca.html'"
+    >
+
+        <span>
+            📚
+        </span>
+
+        <small>
+            Biblioteca
+        </small>
+
+    </button>
+
+
+    <button
+        class="nav-item adicionar"
+        onclick="location.href='novo.html'"
+    >
+
+        <span>
+            +
+        </span>
+
+        <small>
+            Adicionar
+        </small>
+
+    </button>
+
+
+    <button
+        class="nav-item"
+        onclick="location.href='estatisticas.html'"
+    >
+
+        <span>
+            📊
+        </span>
+
+        <small>
+            Estatísticas
+        </small>
+
+    </button>
+
+
+    <button
+        class="nav-item"
+        onclick="location.href='perfil.html'"
+    >
+
+        <span>
+            👤
+        </span>
+
+        <small>
+            Perfil
+        </small>
+
+    </button>
+
+
+</nav>
+
+
+<script>
+
+
+let acervo = [];
+
+let filtroAtual = "Todos";
+
+
+/* CARREGAR ACERVO */
+
+function carregarAcervo() {
+
+
+    acervo =
+        JSON.parse(
+            localStorage.getItem("acervo")
+        );
+
+
+    if (!acervo) {
+
+        acervo = [];
+
+    }
+
+
+    mostrarItens();
+
+}
+
+
+/* FILTRAR */
+
+function filtrar(tipo, botao) {
+
+
+    filtroAtual = tipo;
+
+
+    document
+        .querySelectorAll(".filtro")
+        .forEach(function(item) {
+
+            item.classList.remove("ativo");
+
+        });
+
+
+    botao.classList.add("ativo");
+
+
+    if (tipo === "Todos") {
+
+        document.getElementById(
+            "tituloLista"
+        ).textContent = "Todos";
+
+    }
+
+
+    if (tipo === "Livro") {
+
+        document.getElementById(
+            "tituloLista"
+        ).textContent = "Livros";
+
+    }
+
+
+    if (tipo === "Filme") {
+
+        document.getElementById(
+            "tituloLista"
+        ).textContent = "Filmes";
+
+    }
+
+
+    if (tipo === "Série") {
+
+        document.getElementById(
+            "tituloLista"
+        ).textContent = "Séries";
+
+    }
+
+
+    mostrarItens();
+
+}
+
+
+/* MOSTRAR ITENS */
+
+function mostrarItens() {
+
+
+    const lista =
+        document.getElementById("lista");
+
+
+    let itens = acervo;
+
+
+    if (filtroAtual !== "Todos") {
+
+        itens =
+            acervo.filter(function(item) {
+
+                return item.tipo === filtroAtual;
+
+            });
+
+    }
+
+
+    document.getElementById(
+        "contador"
+    ).textContent =
+        itens.length +
+        (
+            itens.length === 1
+            ? " item"
+            : " itens"
+        );
+
+
+    /* VAZIO */
+
+
+    if (itens.length === 0) {
+
+
+        let texto = "sua coleção";
+
+
+        if (filtroAtual === "Livro") {
+
+            texto = "seus livros";
+
+        }
+
+
+        if (filtroAtual === "Filme") {
+
+            texto = "seus filmes";
+
+        }
+
+
+        if (filtroAtual === "Série") {
+
+            texto = "suas séries";
+
+        }
+
+
+        lista.innerHTML = `
+
+            <div class="vazio">
+
+                <div class="vazio-icone">
+                    📚
+                </div>
+
+                <h3>
+                    Nada por aqui ainda
+                </h3>
+
+                <p>
+                    Adicione itens para começar
+                    ${texto}.
+                </p>
+
+                <button
+                    class="botao-vazio"
+                    onclick="location.href='novo.html'"
+                >
+                    + Adicionar item
+                </button>
+
+            </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    lista.innerHTML = "";
+
+
+    /* MOSTRAR DO MAIS RECENTE */
+
+    itens
+        .slice()
+        .reverse()
+        .forEach(function(item) {
+
+
+            let icone = "📖";
+
+
+            if (item.tipo === "Filme") {
+
+                icone = "🎬";
+
+            }
+
+
+            if (item.tipo === "Série") {
+
+                icone = "📺";
+
+            }
+
+
+            let estrelas = "";
+
+
+            if (item.nota > 0) {
+
+                estrelas =
+                    "★".repeat(item.nota) +
+                    "☆".repeat(
+                        5 - item.nota
+                    );
+
+            }
+
+
+            let detalhes = "";
+
+
+            if (item.genero) {
+
+                detalhes +=
+                    `<span class="tag">${item.genero}</span>`;
+
+            }
+
+
+            if (item.ano) {
+
+                detalhes +=
+                    `<span class="tag">${item.ano}</span>`;
+
+            }
+
+
+            let favorito = "";
+
+
+            if (item.favorito) {
+
+                favorito =
+                    `<span class="coracao">❤️</span>`;
+
+            }
+
+
+            const div =
+                document.createElement("div");
+
+
+            div.className = "item";
+
+
+            div.innerHTML = `
+
+                <div class="item-icone">
+                    ${icone}
+                </div>
+
+
+                <div class="item-info">
+
+                    <div class="item-titulo">
+                        ${item.titulo}
+                    </div>
+
+
+                    <div class="item-autor">
+                        ${item.autor || ""}
+                    </div>
+
+
+                    <div class="detalhes">
+
+                        ${detalhes}
+
+                        ${
+                            estrelas
+                            ? `<span class="estrelas">${estrelas}</span>`
+                            : ""
+                        }
+
+                        ${favorito}
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            lista.appendChild(div);
+
+        });
+
+}
+
+
+/* INICIAR */
+
+carregarAcervo();
+
+
+</script>
+
+
+</body>
+
+</html>
