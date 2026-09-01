@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Estatísticas - Acervo</title>
+    <title>Estatísticas - Prateleira</title>
 
 
     <style>
@@ -26,6 +26,7 @@
             font-family: Arial, Helvetica, sans-serif;
             background: #f7f9fa;
             color: #092d3d;
+            transition: 0.2s;
         }
 
 
@@ -37,7 +38,9 @@
         }
 
 
-        /* TOPO */
+        /* =========================
+           TOPO
+        ========================= */
 
         .topo {
             padding: 25px 20px 20px;
@@ -56,7 +59,9 @@
         }
 
 
-        /* RESUMO */
+        /* =========================
+           RESUMO
+        ========================= */
 
         .resumo {
             display: grid;
@@ -94,7 +99,9 @@
         }
 
 
-        /* SEÇÃO */
+        /* =========================
+           SEÇÃO
+        ========================= */
 
         .titulo-secao {
             font-size: 14px;
@@ -103,7 +110,9 @@
         }
 
 
-        /* TIPOS */
+        /* =========================
+           TIPOS
+        ========================= */
 
         .tipos {
             margin: 0 20px;
@@ -157,7 +166,9 @@
         }
 
 
-        /* STATUS */
+        /* =========================
+           STATUS
+        ========================= */
 
         .status-card {
             margin: 0 20px;
@@ -214,7 +225,9 @@
         }
 
 
-        /* AVALIAÇÃO */
+        /* =========================
+           AVALIAÇÃO
+        ========================= */
 
         .avaliacao-card {
             margin: 0 20px;
@@ -247,7 +260,9 @@
         }
 
 
-        /* VAZIO */
+        /* =========================
+           VAZIO
+        ========================= */
 
         .vazio {
             text-align: center;
@@ -269,7 +284,9 @@
         }
 
 
-        /* NAVEGAÇÃO */
+        /* =========================
+           NAVEGAÇÃO
+        ========================= */
 
         .navegacao {
             position: fixed;
@@ -334,6 +351,76 @@
             margin-top: 2px;
         }
 
+
+        /* =========================
+           MODO ESCURO
+        ========================= */
+
+        body.modo-escuro {
+            background: #10191d;
+            color: #edf4f5;
+        }
+
+
+        body.modo-escuro .topo p,
+        body.modo-escuro .texto-card,
+        body.modo-escuro .avaliacao-texto,
+        body.modo-escuro .vazio {
+            color: #9eafb5;
+        }
+
+
+        body.modo-escuro .card-resumo,
+        body.modo-escuro .tipo,
+        body.modo-escuro .status-card,
+        body.modo-escuro .avaliacao-card {
+            background: #18252a;
+            border-color: #2b3b40;
+        }
+
+
+        body.modo-escuro .barra {
+            background: #26363b;
+        }
+
+
+        body.modo-escuro .status-linha {
+            border-bottom-color: #2b3b40;
+        }
+
+
+        body.modo-escuro .navegacao {
+            background: #151f23;
+            border-top-color: #2b3b40;
+        }
+
+
+        body.modo-escuro .nav-item {
+            color: #9eafb5;
+        }
+
+
+        body.modo-escuro .nav-item.ativo {
+            color: #7fb1c0;
+        }
+
+
+        /* =========================
+           RESPONSIVO
+        ========================= */
+
+        @media (max-width: 350px) {
+
+            .resumo {
+                gap: 8px;
+            }
+
+            .card-resumo {
+                padding: 13px;
+            }
+
+        }
+
     </style>
 
 </head>
@@ -354,7 +441,7 @@
         </h1>
 
         <p>
-            Veja como está o seu Acervo 📊
+            Veja como está a sua Prateleira 📊
         </p>
 
     </header>
@@ -381,7 +468,7 @@
             </span>
 
             <span class="texto-card">
-                Itens no Acervo
+                Itens na Prateleira
             </span>
 
         </div>
@@ -452,7 +539,7 @@
     <!-- TIPOS -->
 
     <div class="titulo-secao">
-        Meu Acervo
+        Minha Prateleira
     </div>
 
 
@@ -758,17 +845,60 @@
 <script>
 
 
-/* PEGAR ACERVO */
-
-const acervo =
-    JSON.parse(
-        localStorage.getItem(
-            "acervo"
-        )
-    ) || [];
+/* =========================
+   MODO GLOBAL
+========================= */
 
 
-/* CONTADORES */
+function aplicarModo() {
+
+    const modo =
+        localStorage.getItem("modoPrateleira") || "claro";
+
+
+    if (modo === "escuro") {
+
+        document.body.classList.add(
+            "modo-escuro"
+        );
+
+    } else {
+
+        document.body.classList.remove(
+            "modo-escuro"
+        );
+
+    }
+
+}
+
+
+/* =========================
+   PEGAR ACERVO
+========================= */
+
+
+let acervo = [];
+
+
+try {
+
+    acervo =
+        JSON.parse(
+            localStorage.getItem("acervo")
+        ) || [];
+
+} catch (erro) {
+
+    acervo = [];
+
+}
+
+
+/* =========================
+   CONTADORES
+========================= */
+
 
 let livros = 0;
 
@@ -789,7 +919,10 @@ let somaNotas = 0;
 let itensComNota = 0;
 
 
-/* ANALISAR ITENS */
+/* =========================
+   ANALISAR ITENS
+========================= */
+
 
 acervo.forEach(function(item) {
 
@@ -868,13 +1001,14 @@ acervo.forEach(function(item) {
 });
 
 
-/* TOTAL */
+/* =========================
+   TOTAL E MÉDIA
+========================= */
+
 
 const total =
     acervo.length;
 
-
-/* MÉDIA */
 
 let media = 0;
 
@@ -888,7 +1022,10 @@ if (itensComNota > 0) {
 }
 
 
-/* COLOCAR NA TELA */
+/* =========================
+   COLOCAR NA TELA
+========================= */
+
 
 document.getElementById(
     "total"
@@ -930,7 +1067,10 @@ if (itensComNota > 0) {
 }
 
 
-/* TIPOS */
+/* =========================
+   TIPOS
+========================= */
+
 
 document.getElementById(
     "livros"
@@ -950,7 +1090,10 @@ document.getElementById(
     series;
 
 
-/* BARRAS */
+/* =========================
+   BARRAS
+========================= */
+
 
 if (total > 0) {
 
@@ -975,7 +1118,10 @@ if (total > 0) {
 }
 
 
-/* STATUS */
+/* =========================
+   STATUS
+========================= */
+
 
 document.getElementById(
     "statusConcluido"
@@ -995,7 +1141,10 @@ document.getElementById(
     quero;
 
 
-/* ESTRELAS DA MÉDIA */
+/* =========================
+   ESTRELAS DA MÉDIA
+========================= */
+
 
 const estrelasMedia =
     document.getElementById(
@@ -1027,6 +1176,14 @@ if (itensComNota > 0) {
         "☆☆☆☆☆";
 
 }
+
+
+/* =========================
+   INICIAR
+========================= */
+
+
+aplicarModo();
 
 
 </script>
