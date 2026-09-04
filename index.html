@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -15,6 +16,10 @@
 
     <style>
 
+        /* =========================
+           CONFIGURAÇÕES GERAIS
+           ========================= */
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -22,19 +27,61 @@
         }
 
 
+        :root {
+
+            --creme: #f6f0e5;
+            --creme-claro: #fbf8f1;
+            --branco: #fffdf8;
+
+            --verde: #496b5a;
+            --verde-escuro: #365344;
+            --verde-claro: #dfe9df;
+
+            --texto: #263a31;
+            --texto-suave: #788078;
+
+            --borda: #e3ddd1;
+
+            --dourado: #c7984b;
+
+        }
+
+
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f7f9fa;
-            color: #092d3d;
-            transition: background 0.3s, color 0.3s;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: var(--creme);
+
+            color: var(--texto);
+
+            transition:
+                background 0.3s,
+                color 0.3s;
+
         }
 
 
         .app {
+
             max-width: 430px;
+
             margin: auto;
+
             min-height: 100vh;
-            padding-bottom: 100px;
+
+            padding-bottom: 105px;
+
+        }
+
+
+        button {
+
+            font-family: inherit;
+
         }
 
 
@@ -43,19 +90,55 @@
            ========================= */
 
         .topo {
-            padding: 25px 20px 15px;
+
+            padding:
+                28px
+                20px
+                18px;
+
         }
 
 
         .saudacao {
-            color: #71808a;
-            font-size: 12px;
+
+            color: var(--texto-suave);
+
+            font-size: 13px;
+
             margin-bottom: 5px;
+
         }
 
 
         .topo h1 {
-            font-size: 27px;
+
+            font-family: Georgia, "Times New Roman", serif;
+
+            font-size: 31px;
+
+            color: var(--verde-escuro);
+
+            letter-spacing: -0.5px;
+
+        }
+
+
+        .topo h1::after {
+
+            content: "";
+
+            display: block;
+
+            width: 38px;
+
+            height: 3px;
+
+            background: var(--verde);
+
+            border-radius: 5px;
+
+            margin-top: 8px;
+
         }
 
 
@@ -64,126 +147,310 @@
            ========================= */
 
         .resumo {
+
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin: 5px 20px 20px;
+
+            grid-template-columns:
+                1fr
+                1fr;
+
+            gap: 11px;
+
+            margin:
+                2px
+                20px
+                22px;
+
         }
 
 
         .card {
-            background: white;
-            border: 1px solid #dce4e8;
-            border-radius: 17px;
-            padding: 16px;
-            transition: background 0.3s, border-color 0.3s;
+
+            background: var(--branco);
+
+            border:
+                1px solid
+                var(--borda);
+
+            border-radius: 18px;
+
+            padding: 17px;
+
+            box-shadow:
+                0 2px 8px
+                rgba(58, 73, 62, 0.04);
+
+            transition:
+                background 0.3s,
+                border-color 0.3s;
+
         }
 
 
         .card-icone {
-            font-size: 22px;
-            margin-bottom: 8px;
+
+            width: 39px;
+
+            height: 39px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: var(--verde-claro);
+
+            border-radius: 12px;
+
+            font-size: 20px;
+
+            margin-bottom: 10px;
+
         }
 
 
         .card-numero {
+
             display: block;
-            font-size: 24px;
+
+            font-size: 25px;
+
             font-weight: bold;
-            margin-bottom: 3px;
+
+            color: var(--verde-escuro);
+
+            margin-bottom: 4px;
+
         }
 
 
         .card-texto {
-            color: #71808a;
-            font-size: 10px;
+
+            color: var(--texto-suave);
+
+            font-size: 11px;
+
         }
 
 
         /* =========================
-           BOTÃO
+           BOTÃO ADICIONAR
            ========================= */
 
         .botao-adicionar {
-            margin: 0 20px 23px;
-            width: calc(100% - 40px);
+
+            margin:
+                0
+                20px
+                26px;
+
+            width:
+                calc(100% - 40px);
+
             border: none;
-            border-radius: 16px;
-            background: #0b4353;
+
+            border-radius: 15px;
+
+            background: var(--verde);
+
             color: white;
+
             padding: 15px;
-            font-size: 13px;
+
+            font-size: 14px;
+
             font-weight: bold;
+
             cursor: pointer;
+
+            box-shadow:
+                0 5px 14px
+                rgba(73, 107, 90, 0.20);
+
+            transition:
+                background 0.2s,
+                transform 0.2s;
+
+        }
+
+
+        .botao-adicionar:active {
+
+            transform: scale(0.98);
+
         }
 
 
         /* =========================
-           TÍTULOS
+           TÍTULOS DAS SEÇÕES
            ========================= */
 
         .titulo-secao {
+
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 0 20px 10px;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            margin:
+                0
+                20px
+                12px;
+
         }
 
 
         .titulo-secao strong {
-            font-size: 14px;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 17px;
+
+            color: var(--verde-escuro);
+
         }
 
 
         .ver-todos {
+
             border: none;
+
             background: transparent;
-            color: #0b4353;
-            font-size: 10px;
+
+            color: var(--verde);
+
+            font-size: 11px;
+
+            font-weight: bold;
+
             cursor: pointer;
+
         }
 
 
         /* =========================
-           CATEGORIAS
+           CATEGORIA LIVROS
            ========================= */
 
         .categorias {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 9px;
-            margin: 0 20px 23px;
+
+            margin:
+                0
+                20px
+                27px;
+
         }
 
 
         .categoria {
-            background: white;
-            border: 1px solid #dce4e8;
-            border-radius: 15px;
-            padding: 14px 5px;
-            text-align: center;
+
+            background: var(--branco);
+
+            border:
+                1px solid
+                var(--borda);
+
+            border-radius: 17px;
+
+            padding: 16px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
             cursor: pointer;
-            transition: background 0.3s, border-color 0.3s;
+
+            box-shadow:
+                0 2px 8px
+                rgba(58, 73, 62, 0.04);
+
+            transition:
+                background 0.3s,
+                border-color 0.3s,
+                transform 0.2s;
+
         }
 
 
-        .categoria span {
-            display: block;
-            font-size: 23px;
-            margin-bottom: 7px;
+        .categoria:active {
+
+            transform: scale(0.99);
+
+        }
+
+
+        .categoria-icone {
+
+            width: 48px;
+
+            height: 48px;
+
+            border-radius: 14px;
+
+            background: var(--verde-claro);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 25px;
+
+            flex-shrink: 0;
+
+        }
+
+
+        .categoria-info {
+
+            flex: 1;
+
         }
 
 
         .categoria strong {
+
             display: block;
-            font-size: 11px;
-            margin-bottom: 3px;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 16px;
+
+            color: var(--verde-escuro);
+
+            margin-bottom: 4px;
+
         }
 
 
         .categoria small {
-            color: #71808a;
-            font-size: 9px;
+
+            color: var(--texto-suave);
+
+            font-size: 11px;
+
+        }
+
+
+        .categoria-seta {
+
+            color: var(--verde);
+
+            font-size: 20px;
+
         }
 
 
@@ -192,114 +459,226 @@
            ========================= */
 
         .recentes {
-            margin: 0 20px;
+
+            margin:
+                0
+                20px;
+
         }
 
 
         .item {
+
             display: flex;
+
             align-items: center;
-            gap: 12px;
-            background: white;
-            border: 1px solid #dce4e8;
-            border-radius: 15px;
+
+            gap: 13px;
+
+            background: var(--branco);
+
+            border:
+                1px solid
+                var(--borda);
+
+            border-radius: 16px;
+
             padding: 10px;
-            margin-bottom: 9px;
+
+            margin-bottom: 10px;
+
             cursor: pointer;
-            transition: background 0.3s, border-color 0.3s;
+
+            box-shadow:
+                0 2px 7px
+                rgba(58, 73, 62, 0.035);
+
+            transition:
+                background 0.3s,
+                border-color 0.3s,
+                transform 0.2s;
+
+        }
+
+
+        .item:active {
+
+            transform: scale(0.99);
+
         }
 
 
         .capa {
-            width: 48px;
-            height: 65px;
+
+            width: 52px;
+
+            height: 70px;
+
             border-radius: 8px;
-            background: #e8f2f0;
+
+            background: var(--verde-claro);
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             flex-shrink: 0;
+
             overflow: hidden;
-            font-size: 23px;
+
+            font-size: 24px;
+
         }
 
 
         .capa img {
+
             width: 100%;
+
             height: 100%;
+
             object-fit: cover;
+
         }
 
 
         .item-info {
+
             flex: 1;
+
             min-width: 0;
+
         }
 
 
         .item-titulo {
-            font-size: 12px;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 14px;
+
             font-weight: bold;
+
+            color: var(--texto);
+
             margin-bottom: 5px;
+
             white-space: nowrap;
+
             overflow: hidden;
+
             text-overflow: ellipsis;
+
         }
 
 
         .item-tipo {
-            color: #71808a;
-            font-size: 9px;
+
+            color: var(--texto-suave);
+
+            font-size: 10px;
+
             margin-bottom: 5px;
+
         }
 
 
         .item-leitura {
-            color: #0b4353;
-            font-size: 9px;
+
+            color: var(--verde);
+
+            font-size: 10px;
+
             margin-bottom: 4px;
+
             font-weight: bold;
+
         }
 
 
         .item-estrelas {
-            color: #eca72c;
-            font-size: 12px;
+
+            color: var(--dourado);
+
+            font-size: 13px;
+
+            letter-spacing: 1px;
+
         }
 
 
+        /* =========================
+           ESTADO VAZIO
+           ========================= */
+
         .vazio {
-            background: white;
-            border: 1px dashed #dce4e8;
-            border-radius: 16px;
-            padding: 28px 15px;
+
+            background: var(--branco);
+
+            border:
+                1px dashed
+                var(--borda);
+
+            border-radius: 17px;
+
+            padding:
+                32px
+                18px;
+
             text-align: center;
-            color: #71808a;
-            transition: background 0.3s, border-color 0.3s;
+
+            color: var(--texto-suave);
+
         }
 
 
         .vazio span {
+
             display: block;
-            font-size: 35px;
-            margin-bottom: 8px;
+
+            font-size: 39px;
+
+            margin-bottom: 10px;
+
         }
 
 
         .vazio p {
-            font-size: 11px;
-            margin-bottom: 12px;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+
+            margin-bottom: 15px;
+
         }
 
 
         .vazio button {
+
             border: none;
-            background: #0b4353;
+
+            background: var(--verde);
+
             color: white;
+
             border-radius: 12px;
-            padding: 10px 15px;
-            font-size: 10px;
+
+            padding:
+                11px
+                16px;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
             cursor: pointer;
+
         }
 
 
@@ -308,67 +687,128 @@
            ========================= */
 
         .navegacao {
+
             position: fixed;
+
             bottom: 0;
+
             left: 50%;
-            transform: translateX(-50%);
+
+            transform:
+                translateX(-50%);
+
             width: 100%;
+
             max-width: 430px;
-            background: white;
-            border-top: 1px solid #dce4e8;
+
+            background: var(--branco);
+
+            border-top:
+                1px solid
+                var(--borda);
+
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            padding: 9px 5px 8px;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            padding:
+                9px
+                5px
+                8px;
+
             z-index: 100;
-            transition: background 0.3s, border-color 0.3s;
+
+            transition:
+                background 0.3s,
+                border-color 0.3s;
+
         }
 
 
         .nav-item {
+
             border: none;
+
             background: transparent;
-            color: #71808a;
+
+            color: var(--texto-suave);
+
             cursor: pointer;
+
             display: flex;
+
             flex-direction: column;
+
             align-items: center;
+
+            justify-content: center;
+
             gap: 4px;
+
         }
 
 
         .nav-item span {
+
             font-size: 20px;
+
         }
 
 
         .nav-item small {
+
             font-size: 9px;
+
         }
 
 
         .nav-item.ativo {
-            color: #0b4353;
+
+            color: var(--verde);
+
             font-weight: bold;
+
         }
 
 
+        /* =========================
+           BOTÃO CENTRAL +
+           ========================= */
+
         .nav-item.adicionar span {
-            width: 42px;
-            height: 42px;
+
+            width: 43px;
+
+            height: 43px;
+
             margin-top: -25px;
+
             border-radius: 50%;
-            background: #0b4353;
+
+            background: var(--verde);
+
             color: white;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             font-size: 25px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+
+            box-shadow:
+                0 5px 13px
+                rgba(73, 107, 90, 0.25);
+
         }
 
 
         .nav-item.adicionar small {
+
             margin-top: 2px;
+
         }
 
 
@@ -377,51 +817,118 @@
            ========================= */
 
         body.modo-escuro {
-            background: #10191d;
-            color: #e8eeee;
+
+            --creme: #17211c;
+
+            --creme-claro: #1c2822;
+
+            --branco: #202c26;
+
+            --verde: #91b39a;
+
+            --verde-escuro: #b6cfbb;
+
+            --verde-claro: #2d4034;
+
+            --texto: #edf2ed;
+
+            --texto-suave: #aab6ad;
+
+            --borda: #34453a;
+
+            --dourado: #d7ad62;
+
+            background: var(--creme);
+
+            color: var(--texto);
+
         }
 
 
-        body.modo-escuro .card,
-        body.modo-escuro .categoria,
-        body.modo-escuro .item,
-        body.modo-escuro .vazio,
-        body.modo-escuro .navegacao {
-            background: #18262b;
-            border-color: #2a3b41;
+        body.modo-escuro .topo h1 {
+
+            color: var(--verde-escuro);
+
         }
 
 
-        body.modo-escuro .saudacao,
-        body.modo-escuro .card-texto,
-        body.modo-escuro .categoria small,
-        body.modo-escuro .item-tipo,
-        body.modo-escuro .vazio {
-            color: #9eafb5;
+        body.modo-escuro .topo h1::after {
+
+            background: var(--verde);
+
         }
 
 
-        body.modo-escuro .ver-todos,
-        body.modo-escuro .item-leitura {
-            color: #7fc1c9;
+        body.modo-escuro .card-numero {
+
+            color: var(--verde-escuro);
+
         }
 
 
-        body.modo-escuro .categoria strong,
-        body.modo-escuro .item-titulo,
-        body.modo-escuro .card-numero,
         body.modo-escuro .titulo-secao strong {
-            color: #e8eeee;
+
+            color: var(--verde-escuro);
+
         }
 
 
-        body.modo-escuro .capa {
-            background: #24363c;
+        body.modo-escuro .categoria strong {
+
+            color: var(--verde-escuro);
+
         }
 
 
-        body.modo-escuro .nav-item.ativo {
-            color: #7fc1c9;
+        body.modo-escuro .item-titulo {
+
+            color: var(--texto);
+
+        }
+
+
+        body.modo-escuro .item-leitura {
+
+            color: var(--verde);
+
+        }
+
+
+        body.modo-escuro .ver-todos {
+
+            color: var(--verde);
+
+        }
+
+
+        /* =========================
+           TELAS MAIORES
+           ========================= */
+
+        @media (min-width: 431px) {
+
+            body {
+
+                background: #eae7df;
+
+            }
+
+            body.modo-escuro {
+
+                background: #111813;
+
+            }
+
+            .app {
+
+                background: var(--creme);
+
+                box-shadow:
+                    0 0 30px
+                    rgba(0, 0, 0, 0.06);
+
+            }
+
         }
 
     </style>
@@ -473,7 +980,7 @@
             </span>
 
             <span class="card-texto">
-                Itens na Prateleira
+                Livros na Prateleira
             </span>
 
         </div>
@@ -493,7 +1000,7 @@
             </span>
 
             <span class="card-texto">
-                Favoritos
+                Livros favoritos
             </span>
 
         </div>
@@ -510,12 +1017,12 @@
         class="botao-adicionar"
         onclick="location.href='novo.html'"
     >
-        + &nbsp; Adicionar novo item
+        + &nbsp; Adicionar novo livro
     </button>
 
 
     <!-- =========================
-         CATEGORIAS
+         MINHA PRATELEIRA
          ========================= -->
 
     <div class="titulo-secao">
@@ -539,60 +1046,28 @@
 
         <div
             class="categoria"
-            onclick="abrirBiblioteca('Livro')"
+            onclick="abrirBiblioteca()"
         >
 
-            <span>
+            <div class="categoria-icone">
                 📖
-            </span>
+            </div>
 
-            <strong>
-                Livros
-            </strong>
+            <div class="categoria-info">
 
-            <small id="livros">
-                0 itens
-            </small>
+                <strong>
+                    Meus livros
+                </strong>
 
-        </div>
+                <small id="livros">
+                    0 livros
+                </small>
 
+            </div>
 
-        <div
-            class="categoria"
-            onclick="abrirBiblioteca('Filme')"
-        >
-
-            <span>
-                🎬
-            </span>
-
-            <strong>
-                Filmes
-            </strong>
-
-            <small id="filmes">
-                0 itens
-            </small>
-
-        </div>
-
-
-        <div
-            class="categoria"
-            onclick="abrirBiblioteca('Série')"
-        >
-
-            <span>
-                📺
-            </span>
-
-            <strong>
-                Séries
-            </strong>
-
-            <small id="series">
-                0 itens
-            </small>
+            <div class="categoria-seta">
+                →
+            </div>
 
         </div>
 
@@ -640,6 +1115,7 @@
 
     <button
         class="nav-item ativo"
+        onclick="location.href='index.html'"
     >
 
         <span>
@@ -687,22 +1163,6 @@
 
     <button
         class="nav-item"
-        onclick="location.href='estatisticas.html'"
-    >
-
-        <span>
-            📊
-        </span>
-
-        <small>
-            Estatísticas
-        </small>
-
-    </button>
-
-
-    <button
-        class="nav-item"
         onclick="location.href='perfil.html'"
     >
 
@@ -727,26 +1187,29 @@
    MODO GLOBAL
    =========================
 
-   O modo é escolhido somente
-   na página Perfil.
-
-   Esta página apenas lê a
-   preferência salva.
+   O modo é escolhido na página
+   Perfil e salvo no localStorage.
    ========================= */
 
 function aplicarModo() {
 
     const modo =
-        localStorage.getItem("modoPrateleira") || "claro";
+        localStorage.getItem(
+            "modoPrateleira"
+        ) || "claro";
 
 
     if (modo === "escuro") {
 
-        document.body.classList.add("modo-escuro");
+        document.body.classList.add(
+            "modo-escuro"
+        );
 
     } else {
 
-        document.body.classList.remove("modo-escuro");
+        document.body.classList.remove(
+            "modo-escuro"
+        );
 
     }
 
@@ -767,7 +1230,9 @@ try {
 
     acervo =
         JSON.parse(
-            localStorage.getItem("acervo")
+            localStorage.getItem(
+                "acervo"
+            )
         ) || [];
 
 } catch (erro) {
@@ -783,45 +1248,25 @@ try {
 
 
 /* =========================
-   CONTADORES
+   CONSIDERAR APENAS LIVROS
    ========================= */
 
-let livros = 0;
+const livrosAcervo =
+    acervo.filter(function(item) {
 
-let filmes = 0;
+        return item.tipo === "Livro";
 
-let series = 0;
+    });
+
+
+/* =========================
+   FAVORITOS
+   ========================= */
 
 let favoritos = 0;
 
 
-/* =========================
-   CONTAR
-   ========================= */
-
-acervo.forEach(function(item) {
-
-
-    if (item.tipo === "Livro") {
-
-        livros++;
-
-    }
-
-
-    if (item.tipo === "Filme") {
-
-        filmes++;
-
-    }
-
-
-    if (item.tipo === "Série") {
-
-        series++;
-
-    }
-
+livrosAcervo.forEach(function(item) {
 
     if (item.favorito === true) {
 
@@ -833,13 +1278,13 @@ acervo.forEach(function(item) {
 
 
 /* =========================
-   MOSTRAR
+   MOSTRAR CONTADORES
    ========================= */
 
 document.getElementById(
     "total"
 ).textContent =
-    acervo.length;
+    livrosAcervo.length;
 
 
 document.getElementById(
@@ -851,22 +1296,12 @@ document.getElementById(
 document.getElementById(
     "livros"
 ).textContent =
-    livros +
-    (livros === 1 ? " item" : " itens");
-
-
-document.getElementById(
-    "filmes"
-).textContent =
-    filmes +
-    (filmes === 1 ? " item" : " itens");
-
-
-document.getElementById(
-    "series"
-).textContent =
-    series +
-    (series === 1 ? " item" : " itens");
+    livrosAcervo.length +
+    (
+        livrosAcervo.length === 1
+            ? " livro"
+            : " livros"
+    );
 
 
 /* =========================
@@ -879,7 +1314,7 @@ const recentes =
     );
 
 
-if (acervo.length === 0) {
+if (livrosAcervo.length === 0) {
 
 
     recentes.innerHTML = `
@@ -893,13 +1328,13 @@ if (acervo.length === 0) {
             <p>
                 Sua Prateleira ainda está vazia.
                 <br>
-                Comece adicionando seu primeiro item!
+                Comece adicionando seu primeiro livro!
             </p>
 
             <button
                 onclick="location.href='novo.html'"
             >
-                Adicionar primeiro item
+                Adicionar primeiro livro
             </button>
 
         </div>
@@ -911,12 +1346,12 @@ if (acervo.length === 0) {
 
 
     /*
-        Mostra os últimos 5 itens.
+        Mostra os últimos 5 livros.
         O mais recente aparece primeiro.
     */
 
     const ultimos =
-        acervo
+        livrosAcervo
             .slice()
             .reverse()
             .slice(0, 5);
@@ -939,6 +1374,14 @@ if (acervo.length === 0) {
             function() {
 
 
+                /*
+                    Encontramos o índice
+                    original dentro do acervo
+                    completo para manter a
+                    compatibilidade com
+                    detalhes.html.
+                */
+
                 const indice =
                     acervo.indexOf(item);
 
@@ -953,34 +1396,6 @@ if (acervo.length === 0) {
                     "detalhes.html";
 
             };
-
-
-        /* =========================
-           ÍCONE
-           ========================= */
-
-        let icone =
-            "📚";
-
-
-        if (
-            item.tipo === "Filme"
-        ) {
-
-            icone =
-                "🎬";
-
-        }
-
-
-        if (
-            item.tipo === "Série"
-        ) {
-
-            icone =
-                "📺";
-
-        }
 
 
         /* =========================
@@ -1011,7 +1426,11 @@ if (acervo.length === 0) {
 
 
             img.alt =
-                "Capa";
+                "Capa de " +
+                (
+                    item.titulo ||
+                    "livro"
+                );
 
 
             capa.appendChild(
@@ -1029,7 +1448,7 @@ if (acervo.length === 0) {
 
 
             span.textContent =
-                icone;
+                "📖";
 
 
             capa.appendChild(
@@ -1053,6 +1472,8 @@ if (acervo.length === 0) {
             "item-info";
 
 
+        /* TÍTULO */
+
         const titulo =
             document.createElement(
                 "div"
@@ -1073,6 +1494,8 @@ if (acervo.length === 0) {
         );
 
 
+        /* TIPO */
+
         const tipo =
             document.createElement(
                 "div"
@@ -1084,8 +1507,7 @@ if (acervo.length === 0) {
 
 
         tipo.textContent =
-            item.tipo ||
-            "Item";
+            "Livro";
 
 
         info.appendChild(
@@ -1097,71 +1519,64 @@ if (acervo.length === 0) {
            LEITURA
            ========================= */
 
-        if (
-            item.tipo === "Livro"
-        ) {
+        const numeroLeitura =
+            item.leituraNumero ||
+            item.leitura ||
+            item.numeroLeitura;
 
 
-            const numeroLeitura =
-                item.leituraNumero ||
-                item.leitura ||
-                item.numeroLeitura;
+        let textoLeitura =
+            "";
 
 
-            let textoLeitura =
-                "";
+        if (numeroLeitura) {
+
+            textoLeitura =
+                "Leitura #" +
+                numeroLeitura;
+
+        }
 
 
-            if (numeroLeitura) {
-
-                textoLeitura =
-                    "Leitura #" +
-                    numeroLeitura;
-
-            }
-
-
-            if (item.mesLeitura) {
-
-
-                if (textoLeitura) {
-
-                    textoLeitura +=
-                        " • " +
-                        item.mesLeitura;
-
-                } else {
-
-                    textoLeitura =
-                        item.mesLeitura;
-
-                }
-
-            }
+        if (item.mesLeitura) {
 
 
             if (textoLeitura) {
 
+                textoLeitura +=
+                    " • " +
+                    item.mesLeitura;
 
-                const leitura =
-                    document.createElement(
-                        "div"
-                    );
+            } else {
 
-
-                leitura.className =
-                    "item-leitura";
-
-
-                leitura.textContent =
-                    textoLeitura;
-
-
-                info.appendChild(
-                    leitura
-                );
+                textoLeitura =
+                    item.mesLeitura;
 
             }
+
+        }
+
+
+        if (textoLeitura) {
+
+
+            const leitura =
+                document.createElement(
+                    "div"
+                );
+
+
+            leitura.className =
+                "item-leitura";
+
+
+            leitura.textContent =
+                textoLeitura;
+
+
+            info.appendChild(
+                leitura
+            );
 
         }
 
@@ -1186,9 +1601,23 @@ if (acervo.length === 0) {
 
         if (nota > 0) {
 
+            const notaLimitada =
+                Math.min(
+                    Math.max(
+                        Math.round(nota),
+                        0
+                    ),
+                    5
+                );
+
+
             estrelas.textContent =
-                "★".repeat(nota) +
-                "☆".repeat(5 - nota);
+                "★".repeat(
+                    notaLimitada
+                ) +
+                "☆".repeat(
+                    5 - notaLimitada
+                );
 
         }
 
@@ -1225,14 +1654,13 @@ if (acervo.length === 0) {
    ABRIR BIBLIOTECA
    ========================= */
 
-function abrirBiblioteca(tipo) {
+function abrirBiblioteca() {
 
-
-    localStorage.setItem(
-        "filtroBiblioteca",
-        tipo
-    );
-
+    /*
+        Não precisamos mais de filtro
+        por tipo porque a Prateleira
+        trabalha somente com livros.
+    */
 
     location.href =
         "biblioteca.html";
@@ -1246,3 +1674,4 @@ function abrirBiblioteca(tipo) {
 </body>
 
 </html>
+```
